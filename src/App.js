@@ -1,11 +1,11 @@
 import './App.css';
-import Main from './Components/Main';
+import AllRoutes from './Components/AllRoutes';
 import './Media.css';
 
 function App() {
   return (
     <>
-      <Main/>
+      <AllRoutes/>
     </>
   );
 }
