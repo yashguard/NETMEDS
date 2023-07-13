@@ -5,7 +5,6 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-}
 .container{
     width: 1320px;
     margin: 0 auto;
@@ -96,4 +95,6 @@
     width: 75%;
     background-color: white;
     border-radius: 15px;
+    transition: all 0.5s;
+
 }
