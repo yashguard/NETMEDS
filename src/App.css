@@ -12,6 +12,81 @@
     margin: 0 auto;
 }
 
+.col-xs-1,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-sm-1,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-lg-1,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-xl-1,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xxl-1,
+.col-xxl-2,
+.col-xxl-3,
+.col-xxl-4,
+.col-xxl-5,
+.col-xxl-6,
+.col-xxl-7,
+.col-xxl-8,
+.col-xxl-9,
+.col-xxl-10,
+.col-xxl-11,
+.col-xxl-12 {
+  padding: 15px;
+}
+
 .bg-light-gray {
     background-color: #F6F6F7;
 }
@@ -38,6 +113,14 @@ a {
 
 .align-item-center {
     align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
 }
 
 .mt-2 {
@@ -131,7 +214,7 @@ a {
     transition: all 0.5s;
 }
 
-.signup-box label {
+.signup-box .form label {
     display: block;
     font-size: 12px;
     color: #24aeb1;
@@ -139,22 +222,22 @@ a {
     margin-bottom: 5px;
 }
 
-.signup-box input {
+.signup-box .form input {
     margin-bottom: 30px;
     border: none;
     border-bottom: 2px solid rgba(21,27,57,0.1);
     font-size: 16px;
     color: #151b39;
     outline: none;
-    width: 60%;
+    width: 70%;
     padding-left: 20px;
 }
 
-.signup-box input::placeholder {
+.signup-box .form input::placeholder {
     color: #151b3956;
 }
 
-.signup-box a .submit {
+.signup-box .form a .submit {
     display: block;
     width: fit-content;
     padding: 12px 40px;
@@ -164,4 +247,50 @@ a {
     background-color: #24aeb1;
     color: #F6F6F7;
     font-size: 16px;
+}
+
+.signup-box .auth h4 {
+    font-size: 18px;
+    text-align: center;
+    position: relative;
+}
+
+.signup-box .auth h4::before {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 48%;
+    left: 0;
+    top: 50%;
+    transform: translateY(50%);
+    background-color: #151b396e;
+}
+
+.signup-box .auth h4::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 48%;
+    right: 0;
+    top: 50%;
+    transform: translateY(50%);
+    background-color: #151b396e;
+}
+
+.signup-box .auth button {
+    cursor: pointer;
+    border: none;
+    background-color: #fff;
+    border: 1px solid rgba(21,27,57,.2);
+    font-size: 14px;
+    color: rgba(21,27,57,.6);
+    border-radius: 4px;
+    width: 65%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.signup-box .auth img {
+    width: 25px;
+    margin-right: 30px;
 }
