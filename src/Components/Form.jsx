@@ -10,9 +10,8 @@ const Form = () => {
   let [password, setPassword] = useState();
   let [confirmpassword, setConfirmPassword] = useState();
   let [users, setUsers] = useState([]);
-  let proEmail = useSelector((store) => store.users);
+  let proEmail = useSelector((store) => store.users[0].email);
   let filled = false;
-  let done = false;
 
   const getData = () => {
     axios
@@ -31,24 +30,19 @@ const Form = () => {
         alert("Please write the correct password");
         setConfirmPassword("");
       } else {
-        users.map((ele) => {
-          if (ele.fname === fname) {
-            return [alert("Name is already registered"), setFname("")];
-          } else if (ele.lname === lname) {
-            return [
-              alert("User with given last name is already registered"),
-              setLname(""),
-            ];
-          } else if (ele.email === email) {
-            return [
-              alert("The given email is already registered"),
-              setEmail(""),
-            ];
-          } else if (ele.password === password) {
-            return [
-              alert("The given password is already used"),
-              setPassword(""),
-            ];
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].fname === fname) {
+            alert("Name is already registered");
+            setFname("");
+            break;
+          } else if (users[i].email === email) {
+            alert("The given email is already registered");
+            setEmail("");
+            break;
+          } else if (users[i].password === password) {
+            alert("The given password is already used");
+            setPassword("");
+            break;
           } else {
             axios.post(`http://localhost:8010/signup`, {
               fname: fname,
@@ -65,11 +59,15 @@ const Form = () => {
             setPassword("");
             setConfirmPassword("");
             filled = true;
+            break
           }
-        });
+        }
       }
     }
   };
+  if (proEmail) {
+    email = proEmail;
+  }
   return (
     <div>
       <form onSubmit={handleSignUp} className="mt-3">
