@@ -12,8 +12,10 @@ const Signup = (props) => {
                         <FirstImage />
                     </div>
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 p-5">
-                        <h2 className="title-color fw-500">{props.title}</h2>
-                        <p className="p">{props.des}</p>
+                        <div className="heading">
+                            <h2 className="title-color fw-500">{props.title}</h2>
+                            <p className="p">{props.des}</p>
+                        </div>
                         <div className="form">
                             <Form />
                         </div>

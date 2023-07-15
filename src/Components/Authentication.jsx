@@ -1,6 +1,4 @@
 import React from 'react'
-import ToolTip from "./ToolTip";
-import "react-tooltip/dist/react-tooltip.css";
 
 const Authentication = () => {
     return (
@@ -28,8 +26,6 @@ const Authentication = () => {
                     </button>
                 </div>
             </div>
-          <ToolTip
-          />
         </div>
     )
 }

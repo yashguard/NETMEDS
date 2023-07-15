@@ -237,7 +237,7 @@ a {
     color: #151b3956;
 }
 
-.signup-box .form a .submit {
+.signup-box .form .submit {
     display: block;
     width: fit-content;
     padding: 12px 40px;
