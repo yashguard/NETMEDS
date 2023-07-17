@@ -9,59 +9,46 @@ const Form = () => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [confirmpassword, setConfirmPassword] = useState();
-  let [users, setUsers] = useState([]);
   let proEmail = useSelector((store) => store.users[0].email);
   let filled = false;
 
   const getData = () => {
-    axios
-      .get("http://localhost:8010/users")
-      .then((res) => setUsers([...res.data]));
+    axios.get("http://localhost:8010/users");
   };
   useEffect(() => {
     getData();
   }, []);
   const handleSignUp = (e) => {
     e.preventDefault();
-    if (!fname || !lname || !email || !password || !confirmpassword) {
+    if (!fname && !lname && !email && !password && !confirmpassword) {
       alert("Please fill the blank field");
     } else if (password || confirmpassword) {
       if (password !== confirmpassword) {
         alert("Please write the correct password");
         setConfirmPassword("");
       } else {
-        for (let i = 0; i < users.length; i++) {
-          if (users[i].fname === fname) {
-            alert("Name is already registered");
-            setFname("");
-            break;
-          } else if (users[i].email === email) {
-            alert("The given email is already registered");
-            setEmail("");
-            break;
-          } else if (users[i].password === password) {
-            alert("The given password is already used");
-            setPassword("");
-            break;
-          } else {
-            axios.post(`http://localhost:8010/signup`, {
-              fname: fname,
-              lname: lname,
-              email: email,
-              password: password,
-              confirmpassword: confirmpassword,
-              product: [],
-            });
+        axios
+          .post(`http://localhost:8010/signup`, {
+            fname: fname,
+            lname: lname,
+            email: email,
+            password: password,
+            confirmpassword: confirmpassword,
+            product: [],
+          })
+          .then(() => {
             alert("Done");
+            getData();
             setFname("");
             setLname("");
             setEmail("");
             setPassword("");
             setConfirmPassword("");
             filled = true;
-            break
-          }
-        }
+          })
+          .catch(() =>
+            alert("User already exist")
+          );
       }
     }
   };

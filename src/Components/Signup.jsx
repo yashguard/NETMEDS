@@ -5,7 +5,7 @@ import Authentication from './Authentication'
 
 const Signup = (props) => {
     return (
-        <div className="vh-100 row align-item-center bg-light-gray">
+        <div className="main row align-item-center bg-light-gray">
             <div className="signup-box me-auto mt-2">
                 <div className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
