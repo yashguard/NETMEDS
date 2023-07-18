@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   let [fname, setFname] = useState();
@@ -9,42 +9,39 @@ const Form = () => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [confirmpassword, setConfirmPassword] = useState();
-  let [verify, setVerify] = useState();
+  let nav = useNavigate();
 
   const getData = async () => {
     await axios.get("http://localhost:8010/users");
   };
 
-  // const addedUser = (exist) => {
-  //   alert("Signin successful");
-  //   setVerify(exist)
-  // };
-
-  const alreadyExist = (notexist) => {
-    // alert("User already exist");
-    console.log("notdone");
-    return setVerify(true);
+  const addedUser = async () => {
+    await alert("Signin successful");
+    nav("/");
   };
 
-  const getAuthEmail = (data) => {
-    if (data) {
-      if (data.length > 0) {
-        axios
-          .post(`http://localhost:8010/signup`, data[0])
-          .then(() => {
-            console.log("done");
-          })
-          .catch((err) => {
-            return alreadyExist();
-          });
-      }
+  const alreadyExist = async () => {
+    await alert("User already exist");
+    nav("/signup");
+  };
+
+  const getAuthEmail = async (data) => {
+    if (data.length > 0) {
+      await axios
+        .post(`http://localhost:8010/signup`, data[0])
+        .then(async () => {
+          await addedUser();
+        })
+        .catch(async () => {
+          await alreadyExist();
+        });
     }
   };
-  console.log(verify);
-  useSelector((store) => getAuthEmail(store));
+  let prodata = useSelector((store) => store.user);
   useEffect(() => {
     getData();
-  }, []);
+    getAuthEmail(prodata);
+  }, [prodata]);
   const handleSignUp = (e) => {
     e.preventDefault();
     if (!fname && !lname && !email && !password && !confirmpassword) {
@@ -73,7 +70,15 @@ const Form = () => {
             setPassword("");
             setConfirmPassword("");
           })
-          .catch(() => alert("User already exist"));
+          .catch(() => {
+            alert("User already exist");
+            getData();
+            setFname("");
+            setLname("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+          });
       }
     }
   };
@@ -116,9 +121,7 @@ const Form = () => {
           type="password"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <Link type="submit" to="/signup">
-          <input type="submit" value="Signup" className="submit fw-500" />
-        </Link>
+        <input type="submit" value="Signup" className="submit fw-500" />
       </form>
     </div>
   );
