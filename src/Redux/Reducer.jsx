@@ -1,4 +1,4 @@
-import { add } from "./ActionType";
+import { add, verify } from "./ActionType";
 
 let initialState = [];
 export const reducer = (state = initialState, action) => {
@@ -11,9 +11,13 @@ export const reducer = (state = initialState, action) => {
           lname: action.lname,
           email: action.email,
           password: action.password,
-          confirmpassword: action.password,
+          confirmpassword: action.cpassword,
+          verify: action.verify,
         },
       ];
+
+    case verify:
+      return [...state, { verify: action.exist }];
     default:
       return state;
   }

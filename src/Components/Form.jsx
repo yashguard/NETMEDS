@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Form = () => {
@@ -9,30 +9,41 @@ const Form = () => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [confirmpassword, setConfirmPassword] = useState();
-  let filled = false;
+  let [verify, setVerify] = useState();
 
-  const getData = () => {
-    axios.get("http://localhost:8010/users");
+  const getData = async () => {
+    await axios.get("http://localhost:8010/users");
+  };
+
+  // const addedUser = (exist) => {
+  //   alert("Signin successful");
+  //   setVerify(exist)
+  // };
+
+  const alreadyExist = (notexist) => {
+    // alert("User already exist");
+    console.log("notdone");
+    return setVerify(true);
   };
 
   const getAuthEmail = (data) => {
     if (data) {
       if (data.length > 0) {
-        console.log(data)
         axios
           .post(`http://localhost:8010/signup`, data[0])
           .then(() => {
-            alert("Signin successful");
-            filled = true;
+            console.log("done");
           })
-          .catch(() => alert("User already exist"));
+          .catch((err) => {
+            return alreadyExist();
+          });
       }
     }
   };
+  console.log(verify);
   useSelector((store) => getAuthEmail(store));
   useEffect(() => {
     getData();
-    getAuthEmail();
   }, []);
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -50,6 +61,7 @@ const Form = () => {
             email: email,
             password: password,
             confirmpassword: confirmpassword,
+            verify: true,
             product: [],
           })
           .then(() => {
@@ -60,7 +72,6 @@ const Form = () => {
             setEmail("");
             setPassword("");
             setConfirmPassword("");
-            filled = true;
           })
           .catch(() => alert("User already exist"));
       }
@@ -105,7 +116,7 @@ const Form = () => {
           type="password"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <Link type="submit" to={filled ? "/login" : "/signup"}>
+        <Link type="submit" to="/signup">
           <input type="submit" value="Signup" className="submit fw-500" />
         </Link>
       </form>

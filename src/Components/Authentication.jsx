@@ -14,7 +14,8 @@ const Authentication = () => {
           userdetails._tokenResponse.lastName,
           userdetails._tokenResponse.email,
           userdetails.user.uid,
-          userdetails.user.uid
+          userdetails.user.uid,
+          userdetails.user.emailVerified
         )
       );
     });
@@ -25,7 +26,7 @@ const Authentication = () => {
       <div className="different-auth row">
         <div className="col-lg-6 col-xl-6 col-xxl-6">
           <Link
-            to="/login"
+            to="/signup"
             onClick={handleGoogle}
             className="row align-item-center"
           >
