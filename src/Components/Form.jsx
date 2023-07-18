@@ -9,14 +9,30 @@ const Form = () => {
   let [email, setEmail] = useState();
   let [password, setPassword] = useState();
   let [confirmpassword, setConfirmPassword] = useState();
-  let proEmail = useSelector((store) => store.users[0].email);
   let filled = false;
 
   const getData = () => {
     axios.get("http://localhost:8010/users");
   };
+
+  const getAuthEmail = (data) => {
+    if (data) {
+      if (data.length > 0) {
+        console.log(data)
+        axios
+          .post(`http://localhost:8010/signup`, data[0])
+          .then(() => {
+            alert("Signin successful");
+            filled = true;
+          })
+          .catch(() => alert("User already exist"));
+      }
+    }
+  };
+  useSelector((store) => getAuthEmail(store));
   useEffect(() => {
     getData();
+    getAuthEmail();
   }, []);
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -46,15 +62,10 @@ const Form = () => {
             setConfirmPassword("");
             filled = true;
           })
-          .catch(() =>
-            alert("User already exist")
-          );
+          .catch(() => alert("User already exist"));
       }
     }
   };
-  if (proEmail) {
-    email = proEmail;
-  }
   return (
     <div>
       <form onSubmit={handleSignUp} className="mt-3">
@@ -94,13 +105,9 @@ const Form = () => {
           type="password"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        {filled === true ? (
-          <Link to="/login">
-            <input type="submit" value="Signup" className="submit fw-500" />
-          </Link>
-        ) : (
+        <Link type="submit" to={filled ? "/login" : "/signup"}>
           <input type="submit" value="Signup" className="submit fw-500" />
-        )}
+        </Link>
       </form>
     </div>
   );

@@ -1,9 +1,5 @@
-import { add_email, add_password } from "./ActionType"
+import { add } from "./ActionType";
 
-export const addEmail = (email) => {
-    return { type: add_email, email }
-}
-
-export const addPassword = (password) => {
-    return {type : add_password, password}
-}
+export const addData = (fname, lname, email, password) => {
+  return { type: add, fname, lname, email, password };
+};

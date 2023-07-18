@@ -1,14 +1,19 @@
-import { add_email, add_password } from "./ActionType";
+import { add } from "./ActionType";
 
-let initialState = { users: [{}] };
+let initialState = [];
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case add_email:
-      return { ...state, users: [{ email: action.email }] };
-
-    case add_password:
-      return { ...state, users: [{ password: action.password }] };
-
+    case add:
+      return [
+        ...state,
+        {
+          fname: action.fname,
+          lname: action.lname,
+          email: action.email,
+          password: action.password,
+          confirmpassword: action.password,
+        },
+      ];
     default:
       return state;
   }

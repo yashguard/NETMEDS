@@ -285,7 +285,7 @@ a {
     background-color: #151b396e;
 }
 
-.signup-box .auth button {
+.signup-box .auth a {
     cursor: pointer;
     border: none;
     background-color: #fff;
