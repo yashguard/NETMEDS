@@ -1,4 +1,4 @@
-import { add, verify } from "./ActionType";
+import { add } from "./ActionType";
 
 let initialState = { user: [] };
 export const reducer = (state = initialState, action) => {
@@ -15,9 +15,6 @@ export const reducer = (state = initialState, action) => {
           verify: action.verify,
         }],
       };
-
-    case verify:
-      return [...state, { verify: action.exist }];
     default:
       return state;
   }

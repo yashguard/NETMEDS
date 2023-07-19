@@ -15,14 +15,27 @@ const Form = () => {
     await axios.get("http://localhost:8010/users");
   };
 
-  const addedUser = async () => {
-    await alert("Signin successful");
-    nav("/");
+  const addedUser = (email) => {
+    if (email) {
+      setFname("");
+      setLname("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      nav("/");
+    }
   };
 
-  const alreadyExist = async () => {
-    await alert("User already exist");
-    nav("/signup");
+  const alreadyExist = (email) => {
+    if (email) {
+      alert("User already exist");
+      setFname("");
+      setLname("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      nav("/login");
+    }
   };
 
   const getAuthEmail = async (data) => {
@@ -30,10 +43,13 @@ const Form = () => {
       await axios
         .post(`http://localhost:8010/signup`, data[0])
         .then(async () => {
-          await addedUser();
+          await alert("Signin successful");
+          await addedUser(data[0]);
+          data[0].email = await "";
         })
         .catch(async () => {
-          await alreadyExist();
+          await alreadyExist(data[0].email);
+          data[0].email = await "";
         });
     }
   };
@@ -42,7 +58,7 @@ const Form = () => {
     getData();
     getAuthEmail(prodata);
   }, [prodata]);
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     if (!fname && !lname && !email && !password && !confirmpassword) {
       alert("Please fill the blank field");
@@ -51,7 +67,7 @@ const Form = () => {
         alert("Please write the correct password");
         setConfirmPassword("");
       } else {
-        axios
+        await axios
           .post(`http://localhost:8010/signup`, {
             fname: fname,
             lname: lname,
@@ -61,23 +77,12 @@ const Form = () => {
             verify: true,
             product: [],
           })
-          .then(() => {
-            alert("Done");
-            getData();
-            setFname("");
-            setLname("");
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
+          .then(async () => {
+            await alert("Signup successful");
+            await addedUser();
           })
-          .catch(() => {
-            alert("User already exist");
-            getData();
-            setFname("");
-            setLname("");
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
+          .catch(async () => {
+            await alreadyExist(email);
           });
       }
     }

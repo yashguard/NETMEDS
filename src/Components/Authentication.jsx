@@ -1,8 +1,11 @@
 import React from "react";
-import { googleauth } from "./Config";
+import { auth, googleauth, provider } from "./Config";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addData } from "../Redux/Action";
+import { LoginSocialFacebook } from "reactjs-social-login";
+import { FacebookLoginButton } from "react-social-login-buttons";
+import { signInWithPopup } from "firebase/auth";
 
 const Authentication = () => {
   let dispatch = useDispatch();
@@ -20,6 +23,12 @@ const Authentication = () => {
       );
     });
   };
+  const handleFacebook = () => {
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        console.log(res);
+      })
+  };
   return (
     <div>
       <h4 className="fw-600">Or</h4>
@@ -35,7 +44,7 @@ const Authentication = () => {
           </Link>
         </div>
         <div className="col-lg-6 col-xl-6 col-xxl-6">
-          <Link className="row align-item-center">
+          <Link onClick={handleFacebook} className="row align-item-center">
             <img src="./Image/facebook-icon.png" alt="google" />
             <span>Facebook</span>
           </Link>

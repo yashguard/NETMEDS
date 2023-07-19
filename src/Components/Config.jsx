@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {GoogleAuthProvider, getAuth, signInWithPopup} from "firebase/auth"
+import {FacebookAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup} from "firebase/auth"
 const firebaseConfig = {
   apiKey: "AIzaSyCi42qj4aRa6oIahnF5QHL7g01ZM0MMSCs",
   authDomain: "netmeds-c84ca.firebaseapp.com",
@@ -12,13 +12,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-const auth = getAuth()
+export const auth = getAuth()
 
 export const  googleauth = () => {
     const provider = new GoogleAuthProvider()
     return signInWithPopup(auth, provider)
 }
 
-export const SignOut = () => {
-    return auth.signOut()
-}
+export const provider = new FacebookAuthProvider()
