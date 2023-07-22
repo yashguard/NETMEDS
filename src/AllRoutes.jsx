@@ -4,7 +4,6 @@ import Home from './Pages/Home'
 import SignUp from './Pages/SignUp'
 import Login from './Pages/Login'
 import Product from './Pages/Product'
-import SignIn from './Components/SignIn'
 
 const AllRoutes = () => {
   return (
