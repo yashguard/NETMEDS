@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { emailauth } from "./Config";
 
 const Form = () => {
@@ -115,7 +115,7 @@ const Form = () => {
       }
     }
   };
-  
+
   return (
     <div>
       <form onSubmit={handleSignUp} className="mt-3">
@@ -155,7 +155,14 @@ const Form = () => {
           type="password"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <input type="submit" value="Signup" className="submit fw-500" />
+        <div className="row justify-content-between align-item-center">
+          <div className="submit-btn col-xs-12 col-sm-12 col-md-5 col-lg-12 col-xl-12 col-xxl-5">
+            <input type="submit" value="Signup" className="submit fw-500" />
+          </div>
+          <div className="signin-move-btn fw-600 col-xs-12 col-sm-12 col-md-7 col-lg-12 col-xl-12 col-xxl-7">
+            <span>Already have an account<Link to="/login">Click here</Link></span>
+          </div>
+        </div>
       </form>
     </div>
   );
