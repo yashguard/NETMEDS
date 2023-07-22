@@ -293,12 +293,17 @@ a {
     font-size: 14px;
     color: rgba(21,27,57,.6);
     border-radius: 4px;
-    width: 80%;
+    width: 100%;
     padding: 15px;
     margin: 0 auto;
 }
 
-.signup-box .auth img {
+.signup-box .auth a span {
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
+
+.signup-box .auth a img {
     width: 25px;
-    margin-right: 30px;
+    margin: 0 auto;
 }

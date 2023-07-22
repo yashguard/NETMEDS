@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { emailauth } from "./Config";
 
 const Form = () => {
   let [fname, setFname] = useState();
@@ -13,6 +14,31 @@ const Form = () => {
 
   const getData = async () => {
     await axios.get("http://localhost:8010/users");
+  };
+
+  const addingUser = async (verify) => {
+    await axios
+      .post(`http://localhost:8010/signup`, {
+        fname: fname,
+        lname: lname,
+        email: email,
+        password: password,
+        confirmpassword: confirmpassword,
+        verify: verify,
+        product: [],
+      })
+      .then(async () => {
+        await alert("Signup successful");
+        setFname("");
+        setLname("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        nav("/");
+      })
+      .catch(async () => {
+        await alreadyExist(email);
+      });
   };
 
   const addedUser = (email) => {
@@ -28,7 +54,7 @@ const Form = () => {
 
   const alreadyExist = (email) => {
     if (email) {
-      alert("User already exist");
+      alert("User already exist with email " + email);
       setFname("");
       setLname("");
       setEmail("");
@@ -44,7 +70,7 @@ const Form = () => {
         .post(`http://localhost:8010/signup`, data[0])
         .then(async () => {
           await alert("Signin successful");
-          await addedUser(data[0]);
+          await addedUser(data[0].email);
           data[0].email = await "";
         })
         .catch(async () => {
@@ -53,11 +79,14 @@ const Form = () => {
         });
     }
   };
+
   let prodata = useSelector((store) => store.user);
+
   useEffect(() => {
     getData();
     getAuthEmail(prodata);
   }, [prodata]);
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (!fname && !lname && !email && !password && !confirmpassword) {
@@ -67,26 +96,26 @@ const Form = () => {
         alert("Please write the correct password");
         setConfirmPassword("");
       } else {
-        await axios
-          .post(`http://localhost:8010/signup`, {
-            fname: fname,
-            lname: lname,
-            email: email,
-            password: password,
-            confirmpassword: confirmpassword,
-            verify: true,
-            product: [],
+        await emailauth(email, password)
+          .then((res) => {
+            addingUser(res);
           })
-          .then(async () => {
-            await alert("Signup successful");
-            await addedUser();
-          })
-          .catch(async () => {
-            await alreadyExist(email);
+          .catch(async (err) => {
+            if (
+              err.message ===
+              "Firebase: Password should be at least 6 characters (auth/weak-password)."
+            ) {
+              await alert("Password should be at least 6 characters");
+            } else if (
+              err.message === "Firebase: Error (auth/email-already-in-use)."
+            ) {
+              await alreadyExist(email);
+            }
           });
       }
     }
   };
+  
   return (
     <div>
       <form onSubmit={handleSignUp} className="mt-3">
