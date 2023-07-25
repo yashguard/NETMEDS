@@ -15,9 +15,9 @@ const SignIn = (props) => {
 
   let checkforgot = false
 
+
   let handlesubmit = (e) => {
     e.preventDefault();
-    // handlemail();
     emailLogin(email,pass).then(()=>{
       console.log('success')
       nav('/')
