@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navigation = () => {
   return (
-    <div>
+    <div className='filter-bg'>
       
     </div>
   )

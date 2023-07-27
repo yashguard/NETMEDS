@@ -262,6 +262,10 @@
   .col-xl-12 {
     width: 100%;
   }
+
+  .container {
+    width: 1140px;
+  }
 }
 
 @media (min-width: 1400px) {

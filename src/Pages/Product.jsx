@@ -1,12 +1,12 @@
-import React from 'react'
-import CovidEssentials from '../Components/CovidEssentials'
+import React from "react";
+import CovidEssentials from "../Components/CovidEssentials";
 
 const Product = () => {
   return (
     <div>
-      <CovidEssentials/>
+      <CovidEssentials />
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

@@ -104,7 +104,6 @@ a {
 .me-auto {
     display: block;
     margin: 0 auto;
-    /* width: 100%; */
 }
 
 .vh-100 {
@@ -208,7 +207,7 @@ a {
     padding: 100px 0;
 }
 
-/*------ signin ------*/
+/*------ signup ------*/
 
 .signin-box,
 .signup-box {
@@ -321,4 +320,11 @@ a {
 .signup-box .auth a img {
     width: 25px;
     margin: 0 auto;
+}
+
+
+/*------ filtering ------*/
+.filter-bg {
+    background-color: black;
+    height: 100vh;
 }
