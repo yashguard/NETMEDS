@@ -1,10 +1,12 @@
 import React from "react";
-import CovidEssentials from "../Components/CovidEssentials";
+import ProductPages from "../Components/ProductPages";
 
 const Product = () => {
   return (
-    <div>
-      <CovidEssentials />
+    <div className="products">
+      <div className="container">
+        <ProductPages />
+      </div>
     </div>
   );
 };
