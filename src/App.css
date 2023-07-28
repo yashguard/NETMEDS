@@ -122,6 +122,10 @@ a {
     justify-content: center;
 }
 
+.fd-col {
+    flex-direction: column;
+}
+
 .mt-2 {
     margin-top: 21px;
 }
@@ -209,6 +213,11 @@ a {
 
 .padding-0 {
     padding: 0;
+}
+
+ol,
+ul {
+    list-style: none;
 }
 
 /*------ signup ------*/
@@ -347,9 +356,82 @@ a {
 }
 
 /*------ filtering ------*/
-.products-covid .productsFilterBg {
-    background-color: black;
-    padding: 100px 15px;
+.products-covid .productsFilterBg .categories,
+.products-covid .productsFilterBg .filter {
+    background-color: white;
+    padding: 15px 0 15px 15px;
+}
+
+.products-covid .productsFilterBg h2 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: .8;
+    letter-spacing: .01px;
+    color: #151b39;
+    border-bottom: 1px solid rgba(21, 27, 57, .04);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.products-covid .productsFilterBg .categories ul {
+    max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.products-covid .productsFilterBg .categories ul li {
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid rgba(21, 27, 57, .04);
+    padding: 5px 0 10px 0;
+}
+
+.products-covid .productsFilterBg .categories ul li a {
+    font-size: 16px;
+    color: #6f7284;
+    transition: all 0.5s;
+}
+
+.products-covid .productsFilterBg .categories ul li a:hover {
+    color: black;
+}
+
+.products-covid .productsFilterBg .filter h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.products-covid .productsFilterBg .filter form .search-btn {
+    border: 0;
+    font-size: 14px;
+    height: 36px;
+    padding: 0 30px 0 14px;
+    outline: 0;
+    width: 90%;
+    border-radius: 6px;
+    color: #6f7284;
+    background-color: rgba(10, 21, 27, .05);
+    background-repeat: no-repeat;
+    background-image: url(https://www.netmeds.com/assets/version1689771880/gloryweb/images/icons/search.svg);
+    background-position: 97% center;
+    background-size: 18px;
+    margin: 30px 0 15px 0;
+}
+
+.products-covid .productsFilterBg .filter form ul li {
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid rgba(21, 27, 57, .04);
+    padding: 5px 0 10px 0;
+}
+
+.products-covid .productsFilterBg .filter form ul li input {
+    cursor: pointer;
+}
+
+.products-covid .productsFilterBg .filter form ul li span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6f7284;
+    margin-left: 5px;
 }
 
 /*------ section ------*/
@@ -393,7 +475,7 @@ a {
     position: relative;
     cursor: pointer;
     transition: all 0.5s;
-    width: 353px;
+    width: 317px;
 }
 
 .products-covid .productsRendering .productsLists .products .product:hover {
@@ -419,8 +501,8 @@ a {
 }
 
 .products-covid .productsRendering .productsLists .products .product img {
-    width: 150px ;
-    height: 150px ;
+    width: 150px;
+    height: 150px;
     margin: 0 auto;
     display: block;
 }
