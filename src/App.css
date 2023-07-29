@@ -395,6 +395,10 @@ ul {
     color: black;
 }
 
+.products-covid .productsFilterBg .filter form ul {
+    margin-bottom: 30px;
+}
+
 .products-covid .productsFilterBg .filter h3 {
     font-size: 16px;
     font-weight: 500;

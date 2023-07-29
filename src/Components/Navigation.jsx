@@ -1,27 +1,24 @@
-import axios from "axios";
 import React from "react";
 import { FaAngleRight } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addFilters } from "../Redux/Action";
 
 const Navigation = () => {
+  let dispatchBrand = useDispatch();
   let array = [];
   const handleQueryType = (value, checked) => {
     let values = array.filter((val) => val !== value);
     if (checked && values) {
       array.push(value);
-      console.log(array)
-      return axios
-        .post(`http://localhost:8020/productquerylists?type=${[array]}`)
-        .then((res) => console.log(res.data))
-        .catch((err) => {
-          console.log(err);
-        });
+      dispatchBrand(addFilters(array));
     } else {
       array.filter((val, i) => {
         if (val === value) {
           array.splice(i, 1);
+          dispatchBrand(addFilters(array));
         }
-        return 0;
+        return true;
       });
     }
   };
@@ -173,12 +170,12 @@ const Navigation = () => {
             <li>
               <input
                 type="checkbox"
-                value="iPhone"
+                value="Apple"
                 onChange={(e) =>
                   handleQueryType(e.target.value, e.target.checked)
                 }
               />
-              <span>iPhone(3)</span>
+              <span>Apple</span>
             </li>
             <li>
               <input
@@ -188,17 +185,60 @@ const Navigation = () => {
                   handleQueryType(e.target.value, e.target.checked)
                 }
               />
-              <span>Samsung(3)</span>
+              <span>Samsung</span>
             </li>
             <li>
               <input
                 type="checkbox"
-                value="MacBook"
+                value="OPPO"
                 onChange={(e) =>
                   handleQueryType(e.target.value, e.target.checked)
                 }
               />
-              <span>MacBook(3)</span>
+              <span>OPPO</span>
+            </li>
+          </ul>
+          <ul>
+            <h3>Manufacturers</h3>
+            <div className="search">
+              <input
+                type="search"
+                className="search-btn"
+                placeholder="search..."
+              />
+            </div>
+            <li>
+              <input
+                type="checkbox"
+                value="Huawei"
+                onChange={(e) =>
+                  handleQueryType(e.target.value, e.target.checked)
+                }
+              />
+              <span>Huawei</span>
+            </li>
+          </ul>
+          <ul>
+            <h3>Sorting</h3>
+            <li>
+              <input
+                type="checkbox"
+                value="high-to-low"
+                onChange={(e) =>
+                  handleQueryType(e.target.value, e.target.checked)
+                }
+              />
+              <span style={{marginTop : "20px", display : "inline-block"}}>high-to-low</span>
+            </li>
+            <li>
+              <input
+                type="checkbox"
+                value="low-to-high"
+                onChange={(e) =>
+                  handleQueryType(e.target.value, e.target.checked)
+                }
+              />
+              <span>low-to-high</span>
             </li>
           </ul>
         </form>
