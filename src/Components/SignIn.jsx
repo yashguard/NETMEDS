@@ -3,7 +3,7 @@ import FirstImage from "./FirstImage";
 import "../App.css";
 import "../Media.css";
 import axios from "axios";
-import { emailLogin, googleauth, reset, resetpass } from "../Config";
+import { emailLogin, googleauth, reset, resetpass } from "./Config";
 import { Auth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -19,8 +19,8 @@ const SignIn = (props) => {
   let handlesubmit = (e) => {
     e.preventDefault();
     emailLogin(email,pass).then(()=>{
-      console.log('success')
-      nav('/')
+      alert('success')
+      // nav('/')
     }).catch((err)=>alert('email / password not match'))
 
     if(checkforgot == true){
@@ -29,24 +29,8 @@ const SignIn = (props) => {
 
   };
 
-  let filtereddata = (res) => {
-    // console.log(res);
-    // let data = res.filter((e, i) => e.email === email && e.password == pass);
-    // if (data.length > 0) {
-    //   alert("login success");
-    //   console.log(data)
-    // } else {
-    //   alert("email / password not match");
-    // }
-
-    // axios.patch(`http://localhost:3003/posts/${id}`,email,pass)
-    // checkforgot = false
-
-  };
-
   let handlemail = () => {
     axios.get(`http://localhost:3003/posts`).then((res) => {
-      filtereddata(res.data);
       res.data.filter((e,i) => {
         if (e.email === email) {
           setId(e.id);
