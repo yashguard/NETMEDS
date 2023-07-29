@@ -1,35 +1,53 @@
 import React, { useEffect, useState } from "react";
 import ProductsLists from "./ProductsLists";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addProducts } from "../Redux/Action";
 
 const ProductSection = () => {
-  let [products, setProducts] = useState([]);
+  let [array, setArray] = useState([]);
+  let dispatch = useDispatch();
+  let reduxProducts = useSelector((store) => store.products);
   let filter = useSelector((store) => store.filter);
   const getData = () => {
     axios
       .get("http://localhost:8020/productlists")
       .then((res) => {
-        setProducts(res.data);
+        test(res.data);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-  const test = () => {
-    filter.length > 0 &&
-      filter.map((filters) => {
+  const test = (products) => {
+    if (filter.length > 0) {
+      filter.filter((filters) => {
         if (filters === "high-to-low") {
-          let duplicate = [...products].sort((a, b) => a.price - b.price);
-          duplicate.length > 0 && duplicate.filter((val, i) => {
-            console.log(val)
-          });
+          dispatch(
+            addProducts(reduxProducts.sort((a, b) => b.price - a.price))
+          );
+        } else if (filters === "low-to-high") {
+          dispatch(
+            addProducts(reduxProducts.sort((a, b) => a.price - b.price))
+          );
+        } else {
+          // dispatch(
+          //   addProducts(reduxProducts.filter((val, b) => val.brand === filters))
+          //   );
+          let array = [];
+
+          array.push(
+            ...reduxProducts.filter((val, b) => val.brand === filters)
+          );
+          console.log(array)
         }
       });
+    } else {
+      dispatch(addProducts(products));
+    }
   };
   useEffect(() => {
     getData();
-    test();
   }, [filter]);
   return (
     <div className="productsRendering">
@@ -38,21 +56,10 @@ const ProductSection = () => {
       <div className="productsLists">
         <span className="allProducts">all products :</span>
         <div className="products">
-          {filter.length > 0
-            ? filter.map((filters) => {
-                return (
-                  products.length > 0 &&
-                  products.map((products, i) => {
-                    if (filters === products.brand) {
-                      return <ProductsLists key={i} {...products} />;
-                    }
-                  })
-                );
-              })
-            : products.length > 0 &&
-              products.map((products, i) => {
-                return <ProductsLists key={i} {...products} />;
-              })}
+          {reduxProducts.length > 0 &&
+            reduxProducts.map((products, i) => {
+              return <ProductsLists key={i} {...products} />;
+            })}
         </div>
       </div>
     </div>

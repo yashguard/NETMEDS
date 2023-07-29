@@ -228,7 +228,9 @@ const Navigation = () => {
                   handleQueryType(e.target.value, e.target.checked)
                 }
               />
-              <span style={{marginTop : "20px", display : "inline-block"}}>high-to-low</span>
+              <span style={{ marginTop: "20px", display: "inline-block" }}>
+                high-to-low
+              </span>
             </li>
             <li>
               <input
