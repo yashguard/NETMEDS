@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 const ProductsLists = (props) => {
     let {discountPercentage, thumbnail ,rating, title, description, price} = props
-    // console.log(discountPercentage, thumbnail ,rating, title, description, price)
   return (
     <div className="product">
       <span className="disc">{discountPercentage}% OFF</span>

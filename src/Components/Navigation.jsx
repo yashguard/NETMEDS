@@ -1,25 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addFilters } from "../Redux/Action";
+import { addBrand, addSort } from "../Redux/Action";
 
 const Navigation = () => {
   let dispatchBrand = useDispatch();
-  let array = [];
-  const handleQueryType = (value, checked) => {
-    let values = array.filter((val) => val !== value);
-    if (checked && values) {
-      array.push(value);
-      dispatchBrand(addFilters(array));
-    } else {
-      array.filter((val, i) => {
-        if (val === value) {
-          array.splice(i, 1);
-          dispatchBrand(addFilters(array));
-        }
-        return true;
-      });
+  const handleBrand = (e) => {
+    e.preventDefault();
+    if (e.target.value) {
+      dispatchBrand(addBrand(e.target.value));
+    }
+  };
+  const handleSort = (value) => {
+    if (value) {
+      dispatchBrand(addSort(value));
     }
   };
   return (
@@ -168,79 +163,29 @@ const Navigation = () => {
               />
             </div>
             <li>
-              <input
-                type="checkbox"
-                value="Apple"
-                onChange={(e) =>
-                  handleQueryType(e.target.value, e.target.checked)
-                }
-              />
-              <span>Apple</span>
+              <button value="Apple" onClick={(e) => handleBrand(e)}>
+                Apple
+              </button>
             </li>
             <li>
-              <input
-                type="checkbox"
-                value="Samsung"
-                onChange={(e) =>
-                  handleQueryType(e.target.value, e.target.checked)
-                }
-              />
-              <span>Samsung</span>
+              <button value="Samsung" onClick={(e) => handleBrand(e)}>
+                Samsung
+              </button>
             </li>
             <li>
-              <input
-                type="checkbox"
-                value="OPPO"
-                onChange={(e) =>
-                  handleQueryType(e.target.value, e.target.checked)
-                }
-              />
-              <span>OPPO</span>
-            </li>
-          </ul>
-          <ul>
-            <h3>Manufacturers</h3>
-            <div className="search">
-              <input
-                type="search"
-                className="search-btn"
-                placeholder="search..."
-              />
-            </div>
-            <li>
-              <input
-                type="checkbox"
-                value="Huawei"
-                onChange={(e) =>
-                  handleQueryType(e.target.value, e.target.checked)
-                }
-              />
-              <span>Huawei</span>
+              <button value="OPPO" onClick={(e) => handleBrand(e)}>
+                OPPO
+              </button>
             </li>
           </ul>
           <ul>
             <h3>Sorting</h3>
             <li>
-              <input
-                type="checkbox"
-                value="high-to-low"
-                onChange={(e) =>
-                  handleQueryType(e.target.value, e.target.checked)
-                }
-              />
-              <span style={{ marginTop: "20px", display: "inline-block" }}>
-                high-to-low
-              </span>
-            </li>
-            <li>
-              <input
-                type="checkbox"
-                value="low-to-high"
-                onChange={(e) =>
-                  handleQueryType(e.target.value, e.target.checked)
-                }
-              />
-              <span>low-to-high</span>
+              <select onChange={(e) => handleSort(e.target.value)}>
+                <option value="#">Select the sorting method</option>
+                <option value="high-to-low">High-to-low</option>
+                <option value="low-to-high">Low-to-high</option>
+              </select>
             </li>
           </ul>
         </form>

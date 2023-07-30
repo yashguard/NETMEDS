@@ -1,6 +1,6 @@
-import { add, add_Filters, add_Products } from "./ActionType";
+import { add, add_Brands, add_Products, add_Sort } from "./ActionType";
 
-let initialState = { user: [], products: [], filter: [] };
+let initialState = { user: [], products: [], brand: "", sort: "" };
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case add:
@@ -24,11 +24,18 @@ export const reducer = (state = initialState, action) => {
         products: [...action.products],
       };
 
-    case add_Filters:
+    case add_Brands:
       return {
         ...state,
-        filter: [...action.values],
+        brand: action.brand,
       };
+
+    case add_Sort:
+      return {
+        ...state,
+        sort: action.sort,
+      };
+
     default:
       return state;
   }
