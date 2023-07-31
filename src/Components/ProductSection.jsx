@@ -40,9 +40,9 @@ const ProductSection = () => {
       }
     } else if (sort || brand) {
       if (sort === "high-to-low") {
-        dispatch(addProducts(reduxProducts.sort((a, b) => b.price - a.price)));
+        dispatch(addProducts(products.sort((a, b) => b.price - a.price)));
       } else if (sort === "low-to-high") {
-        dispatch(addProducts(reduxProducts.sort((a, b) => a.price - b.price)));
+        dispatch(addProducts(products.sort((a, b) => a.price - b.price)));
       } else {
         dispatch(
           addProducts(products.filter((products) => products.brand === brand))

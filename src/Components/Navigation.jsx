@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { addBrand, addSort } from "../Redux/Action";
 
 const Navigation = () => {
   let dispatchBrand = useDispatch();
+  let [query, setQuery] = useSearchParams();
+  console.log(query.get("brand"))
   const handleBrand = (e) => {
     e.preventDefault();
     if (e.target.value) {
       dispatchBrand(addBrand(e.target.value));
+      setQuery({ brand: e.target.value });
     }
   };
   const handleSort = (value) => {
