@@ -3,71 +3,102 @@ import FirstImage from "./FirstImage";
 import "../App.css";
 import "../Media.css";
 import axios from "axios";
-import { emailLogin, googleauth, reset, resetpass } from "./Config";
+import { emailLogin, googleauth, reset, resetpass, verification } from "./Config";
 import { Auth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../reduxToollkit/userSlice";
 
 const SignIn = (props) => {
   let [email, setEmail] = useState("");
-  let [pass, setPass] = useState('');
+  let [pass, setPass] = useState("");
   let [id, setId] = useState(0);
-  let nav = useNavigate()
+  let nav = useNavigate();
+  let dispatch=useDispatch()
 
-  let checkforgot = false
+  let checkforgot = false;
 
+  const handlevarify = () => {
+    axios.get(`http://localhost:8010/users`).then((res) => {
+      let data = res.data.filter((e, i) => e.email === email);
+
+      if(data[0].verify == false){
+        alert('you not verify please varify first')
+        alert('we send verification on your email')
+        verification(email)
+      }
+      else{
+        alert("verified")
+      }
+    });
+  };
+
+ const handletoolkitdata =()=>{
+  axios.get(`http://localhost:8010/`).then((res)=>{
+    let data = res.data.filter((e, i) => e.email === email);
+    dispatch(addUser(...data))
+    console.log(...data)
+    nav('/')
+  })
+ }
 
   let handlesubmit = (e) => {
     e.preventDefault();
-    emailLogin(email,pass).then(()=>{
-      alert('success')
-      // nav('/')
-    }).catch((err)=>alert('email / password not match'))
+    emailLogin(email, pass)
+      .then(() => {
+        // handlevarify();
+        handletoolkitdata()
+        // alert('success')
+      })
+      .catch((err) => alert("email / password not match"));
 
-    if(checkforgot == true){
-      handlemail()
+    if (checkforgot == true) {
+      handlemail();
     }
-
   };
 
   let handlemail = () => {
-    axios.get(`http://localhost:3003/posts`).then((res) => {
-      res.data.filter((e,i) => {
+    axios.get(`http://localhost:8010/users`).then((res) => {
+      res.data.filter((e, i) => {
         if (e.email === email) {
-          setId(e.id);
+          setId(e._id);
+          console.log(e._id);
         }
       });
     });
   };
-  
+
   let handleforgot = (e) => {
-    alert('check google email')
-    resetpass(email).then((val)=>{
-      console.log('completed', val)
-      checkforgot = true;
-    }).catch(()=>{
-      alert('email not found')
-    })
+    alert("check google email");
+    resetpass(email)
+      .then((val) => {
+        console.log("completed", val);
+        checkforgot = true;
+        handlemail(email);
+      })
+      .catch(() => {
+        alert("email not found");
+      });
   };
 
-  const handledata =(res)=>{
-    let data = res
+  const handledata = (res) => {
+    let data = res;
     axios.get(`http://localhost:3003/posts`).then((res) => {
-        res.data.filter((e,i) => {
-          if (e.email === data) {
-            setPass(e.password)
-            console.log()
-          }
-        });
+      res.data.filter((e, i) => {
+        if (e.email === data) {
+          setPass(e.password);
+          console.log();
+        }
       });
-  }
-  const handleauth =()=>{
-    googleauth().then((details)=>{
-      setEmail(details._tokenResponse.email)
-      handledata(details._tokenResponse.email)
     })
-  }
+  };
+  const handleauth = () => {
+    googleauth().then((details) => {
+      setEmail(details._tokenResponse.email);
+      handledata(details._tokenResponse.email);
+    });
+  };
 
-  
   return (
     <div className="vh-100 row align-item-center bg-light-gray">
       <div className="signin-box me-auto mt-2">
@@ -109,12 +140,21 @@ const SignIn = (props) => {
               </form>
 
               <div className="row justify-content-evenly">
-                <button className="signin-icon p-2 c-pointer" onClick={handleauth}>Google</button>
+                <button
+                  className="signin-icon p-2 c-pointer"
+                  onClick={handleauth}
+                >
+                  Google
+                </button>
                 <button className="signin-icon c-pointer">Facebook</button>
               </div>
 
-              <p className="text-center p mt-1 c-pointer mb-4" onClick={()=>nav('/signup')}>create an account</p>
-
+              <p
+                className="text-center p mt-1 c-pointer mb-4"
+                onClick={() => nav("/signup")}
+              >
+                create an account
+              </p>
             </div>
           </div>
         </div>

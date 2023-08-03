@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
   getAuth,
+  sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -32,6 +33,9 @@ export const signout = () => {
 export const emailLogin =(email,password)=>{
   return signInWithEmailAndPassword(auth , email,password)
 }
-export const resetpass = (email) => {
+export const resetpass = async(email) => {
   return sendPasswordResetEmail(auth, email);
 };
+export const verification =async(email,password)=>{
+  return sendEmailVerification(email)
+}
