@@ -5,11 +5,13 @@ import ProductPages from "./ProductPages";
 
 const Header = () => {
   return (
-    <header>
-      <TopPartHeader />
-      <BottomPartHeader />
+    <>
+      <header>
+        <TopPartHeader />
+        <BottomPartHeader />
+      </header>
       <ProductPages />
-    </header>
+    </>
   );
 };
 
