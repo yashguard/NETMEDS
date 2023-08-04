@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ProductsLists from "./ProductsLists";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addProducts, addSort } from "../Redux/Action";
+import { addProducts } from "../Redux/Action";
 
 const ProductSection = () => {
   let dispatch = useDispatch();
@@ -43,6 +43,8 @@ const ProductSection = () => {
         dispatch(addProducts(products.sort((a, b) => b.price - a.price)));
       } else if (sort === "low-to-high") {
         dispatch(addProducts(products.sort((a, b) => a.price - b.price)));
+      } else if (brand === "All") {
+        dispatch(addProducts(products));
       } else {
         dispatch(
           addProducts(products.filter((products) => products.brand === brand))

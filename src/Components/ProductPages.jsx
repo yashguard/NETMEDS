@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const ProductPages = () => {
   return (
     <div>
-      <div className="productLinks row justify-content-between">
+      <div className="productLinks row">
         <Link to="/product/covidessentials">COVID Essentials</Link>
         <Link to="/product/Diabetes">Diabetes</Link>
         <Link to="/product/Veterinary">Veterinary</Link>

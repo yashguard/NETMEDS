@@ -2,14 +2,14 @@ import React from "react";
 import { googleauth } from "./Config";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addData } from "../Redux/Action";
+import { addUsers } from "../Redux/Action";
 
 const Authentication = () => {
   let dispatch = useDispatch();
   const handleGoogle = () => {
     googleauth().then((userdetails) => {
       dispatch(
-        addData(
+        addUsers(
           userdetails._tokenResponse.firstName,
           userdetails._tokenResponse.lastName,
           userdetails._tokenResponse.email,

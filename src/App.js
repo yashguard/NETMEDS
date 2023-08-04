@@ -1,13 +1,11 @@
-import './App.css';
-import './Media.css';
-import AllRoutes from './AllRoutes';
-import SignUp from './Pages/SignUp';
+import AllRoutes from "./AllRoutes";
+import "./App.css";
+import "./Media.css";
 
 function App() {
   return (
     <>
-      <AllRoutes/>
-      {/* <SignUp/> */}
+      <AllRoutes />
     </>
   );
 }

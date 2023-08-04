@@ -1,9 +1,9 @@
-import { add, add_Brands, add_Products, add_Sort } from "./ActionType";
+import { add_Users, add_Brands, add_Products, add_Sort } from "./ActionType";
 
 let initialState = { user: [], products: [], brand: "", sort: "" };
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case add:
+    case add_Users:
       return {
         ...state,
         user: [

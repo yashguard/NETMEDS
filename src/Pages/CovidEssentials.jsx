@@ -1,7 +1,7 @@
 import React from "react";
-import ProductSection from "./ProductSection";
-import Navigation from "./Navigation";
-import ProductPages from "./ProductPages";
+import ProductSection from "../Components/ProductSection";
+import Navigation from "../Components/Navigation";
+import ProductPages from "../Components/ProductPages";
 
 const CovidEssentials = () => {
   return (

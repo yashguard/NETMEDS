@@ -7,7 +7,6 @@ import { addBrand, addSort } from "../Redux/Action";
 const Navigation = () => {
   let dispatchBrand = useDispatch();
   let [query, setQuery] = useSearchParams();
-  console.log(query.get("brand"))
   const handleBrand = (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -165,6 +164,11 @@ const Navigation = () => {
                 placeholder="search..."
               />
             </div>
+            <li>
+              <button value="All" onClick={(e) => handleBrand(e)}>
+                All
+              </button>
+            </li>
             <li>
               <button value="Apple" onClick={(e) => handleBrand(e)}>
                 Apple
