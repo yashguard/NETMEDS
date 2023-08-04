@@ -5,9 +5,9 @@ import ProductPages from "../Components/ProductPages";
 
 const CovidEssentials = () => {
   return (
-    <div  className="products-covid">
+    <div className="products-covid">
       <div className="container">
-        <ProductPages/>
+        <ProductPages />
         <div className="padding-100 row">
           <div className="col-xxl-3 padding-0">
             <Navigation />
