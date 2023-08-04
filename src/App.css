@@ -430,6 +430,8 @@ header {
     padding: 60px 0;
 }
 
+/* =================================================signup form============================================= */
+
 .signup-box .form label {
     display: block;
     font-size: 12px;
@@ -480,6 +482,8 @@ header {
     margin: 0;
 }
 
+/* =================================================signup auth============================================= */
+
 .signup-box .auth h4 {
     font-size: 18px;
     text-align: center;
@@ -529,129 +533,6 @@ header {
 .signup-box .auth a img {
     width: 25px;
     margin: 0 auto;
-}
-
-/* --------------------------------------------main-navigation------------------------------------------- */
-
-.main-navigation {
-    background-color: #32aeb1;
-}
-
-.main-navigation .menus {
-
-    min-width: 1030px;
-    max-width: 1030px;
-    margin: 0px auto;
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-.main-navigation .menus .row {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 0 2px 0;
-    padding: 0%;
-}
-
-ul li {
-    list-style: none;
-}
-
-.menus li a {
-    color: #ffffff;
-    margin: 11px 0px 0px 10px;
-    font-size: 14px;
-}
-
-/* ----------------------------------------------------dropdown------------------------------------------ */
-.menus a {
-    text-decoration: none;
-    transition: all 0.5s;
-}
-
-.dropdown li {
-    height: auto;
-    width: 100%;
-    transition: all 0.4s;
-}
-
-.dropdown li:hover {
-    background-color: rgb(255, 255, 255);
-    color: #32aeb1;
-}
-
-.dropdown li a {
-    color: rgb(66, 66, 66);
-    font-size: 14px;
-    line-height: 30px;
-    transition: all 0.4s;
-    padding: 20px 90px 20px 3px;
-}
-
-.dropdown li a:hover {
-    color: #32aeb1;
-}
-
-.dropdown {
-    padding: 0;
-    background-color: rgba(247, 247, 247, 0.89);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    top: 138px;
-    position: absolute;
-    display: none;
-    transition: all 0.5s;
-}
-
-.menus ul li:hover .dropdown {
-    display: block;
-}
-
-/* =================================================mega men==============================u=============== */
-
-
-.w-20 {
-    width: 20%;
-}
-
-.w-100 {
-    width: 100%;
-}
-
-.mega-menu li {
-    /* line-height: 25px; */
-    transition: all 0.4s;
-
-    padding: 7px 0;
-
-}
-
-.mega-menu li:hover {
-    color: #32aeb1;
-}
-
-.mega-menu li a {
-    color: rgb(66, 66, 66);
-    font-size: 14px;
-    transition: all 0.4s;
-    margin-left: 0%;
-
-
-}
-
-.mega-menu li a:hover {
-    color: #32aeb1;
-}
-
-.mega-menu {
-    width: 970px;
-    position: absolute;
-    top: 22%;
-    left: 50px;
-    background-color: rgba(247, 247, 247, 0.918);
-    margin: auto;
-    display: none;
-    box-shadow: 0 0 10px #32afb17c;
-
 }
 
 .signup-box .auth h4::after {
