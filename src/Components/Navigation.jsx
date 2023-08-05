@@ -1,17 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { addBrand, addSort } from "../Redux/Action";
+import axios from "axios";
 
 const Navigation = () => {
+  let [category, setCategory] = useState([]);
+  const getProduct = async () => {
+    await axios
+      .get("http://localhost:8020/covid")
+      .then((res) => handleCategory(res.data))
+      .catch((err) => console.error(err.message));
+  };
+  const handleCategory = (products) => {
+    if (products) {
+      const result = products.reduce((finalArray, current) => {
+        let obj = finalArray.find((item) => item.category === current.category);
+        if (obj) {
+          return finalArray;
+        }
+        return finalArray.concat([current]);
+      }, []);
+      setCategory([...result]);
+    }
+  };
+  useEffect(() => {
+    getProduct();
+  }, []);
   let dispatchBrand = useDispatch();
-  let [query, setQuery] = useSearchParams();
+  // let [query, setQuery] = useSearchParams();
   const handleBrand = (e) => {
     e.preventDefault();
     if (e.target.value) {
       dispatchBrand(addBrand(e.target.value));
-      setQuery({ brand: e.target.value });
+      // setQuery({ brand: e.target.value });
     }
   };
   const handleSort = (value) => {
@@ -155,38 +178,41 @@ const Navigation = () => {
       <div className="filter" style={{ marginTop: "50px" }}>
         <h2>Filters</h2>
         <form>
+          <h3>Brands</h3>
+          <div className="search">
+            <input
+              type="search"
+              className="search-btn"
+              placeholder="search..."
+            />
+          </div>
           <ul>
-            <h3>Brands</h3>
-            <div className="search">
-              <input
-                type="search"
-                className="search-btn"
-                placeholder="search..."
-              />
-            </div>
             <li>
-              <button value="All" onClick={(e) => handleBrand(e)}>
+              <button
+                className="category"
+                value="All"
+                onClick={(e) => handleBrand(e)}
+              >
                 All
               </button>
             </li>
-            <li>
-              <button value="Apple" onClick={(e) => handleBrand(e)}>
-                Apple
-              </button>
-            </li>
-            <li>
-              <button value="Samsung" onClick={(e) => handleBrand(e)}>
-                Samsung
-              </button>
-            </li>
-            <li>
-              <button value="OPPO" onClick={(e) => handleBrand(e)}>
-                OPPO
-              </button>
-            </li>
+            {category &&
+              category.map((ele, i) => {
+                return (
+                  <li key={i}>
+                    <button
+                      className="category"
+                      value={`${ele.category}`}
+                      onClick={(e) => handleBrand(e)}
+                    >
+                      {ele.category}
+                    </button>
+                  </li>
+                );
+              })}
           </ul>
+          <h3>Sorting</h3>
           <ul>
-            <h3>Sorting</h3>
             <li>
               <select onChange={(e) => handleSort(e.target.value)}>
                 <option value="#">Select the sorting method</option>

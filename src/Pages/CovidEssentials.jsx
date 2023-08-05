@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductSection from "../Components/ProductSection";
 import Navigation from "../Components/Navigation";
+import axios from "axios";
 
 const CovidEssentials = () => {
   return (

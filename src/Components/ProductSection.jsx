@@ -11,7 +11,7 @@ const ProductSection = () => {
   let sort = useSelector((store) => store.sort);
   const getData = () => {
     axios
-      .get("http://localhost:8020/productlists")
+      .get("http://localhost:8020/covid")
       .then((res) => {
         test(res.data);
       })
@@ -25,7 +25,7 @@ const ProductSection = () => {
         dispatch(
           addProducts(
             products
-              .filter((products) => products.brand === brand)
+              .filter((products) => products.category === brand)
               .sort((a, b) => b.price - a.price)
           )
         );
@@ -33,7 +33,7 @@ const ProductSection = () => {
         dispatch(
           addProducts(
             products
-              .filter((products) => products.brand === brand)
+              .filter((products) => products.category === brand)
               .sort((a, b) => a.price - b.price)
           )
         );
@@ -47,7 +47,7 @@ const ProductSection = () => {
         dispatch(addProducts(products));
       } else {
         dispatch(
-          addProducts(products.filter((products) => products.brand === brand))
+          addProducts(products.filter((products) => products.category === brand))
         );
       }
     } else {

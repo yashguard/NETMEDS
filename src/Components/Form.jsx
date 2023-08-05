@@ -14,12 +14,12 @@ const Form = () => {
   let nav = useNavigate();
 
   const getData = async () => {
-    await axios.get("http://localhost:8010/users");
+    await axios.get("https://netmeds-server.onrender.com/users");
   };
 
   const addingUser = async (verify) => {
     await axios
-      .post(`http://localhost:8010/signup`, {
+      .post(`https://netmeds-server.onrender.com/signup`, {
         fname: fname,
         lname: lname,
         email: email,
@@ -68,7 +68,7 @@ const Form = () => {
   const getAuthEmail = async (data) => {
     if (data.length > 0) {
       await axios
-        .post(`http://localhost:8010/signup`, data[0])
+        .post(`https://netmeds-server.onrender.com/signup`, data[0])
         .then(async () => {
           await alert("Signin successful");
           await addedUser(data[0].email);

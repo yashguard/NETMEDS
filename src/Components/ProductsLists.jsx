@@ -3,11 +3,11 @@ import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const ProductsLists = (props) => {
-  let { discountPercentage, thumbnail, rating, title, description, price } =
+  let { discount, thumbnail, rating, title, description, price } =
     props;
   return (
     <div className="product">
-      <span className="disc">{discountPercentage}% OFF</span>
+      <span className="disc">{discount}% OFF</span>
       <img src={thumbnail} alt="" />
       <span className="rating">
         <FaStar />
