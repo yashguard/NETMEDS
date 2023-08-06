@@ -5,6 +5,8 @@ import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import CovidEssentials from "./Pages/CovidEssentials";
 import Cart from "./Pages/Cart";
+import Surgicals from "./Pages/Surgicals";
+import Treatments from "./Pages/Treatments";
 
 const AllRoutes = () => {
   return (
@@ -15,6 +17,8 @@ const AllRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/covidessentials" element={<CovidEssentials />} />
+        <Route path="/product/surgicals" element={<Surgicals />} />
+        <Route path="/product/treatments" element={<Treatments />} />
         <Route
           path="*"
           element={

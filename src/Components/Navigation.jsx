@@ -1,40 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addBrand, addSort } from "../Redux/Action";
-import axios from "axios";
 
-const Navigation = () => {
-  let [category, setCategory] = useState([]);
-  const getProduct = async () => {
-    await axios
-      .get("http://localhost:8020/covid")
-      .then((res) => handleCategory(res.data))
-      .catch((err) => console.error(err.message));
-  };
-  const handleCategory = (products) => {
-    if (products) {
-      const result = products.reduce((finalArray, current) => {
-        let obj = finalArray.find((item) => item.category === current.category);
-        if (obj) {
-          return finalArray;
-        }
-        return finalArray.concat([current]);
-      }, []);
-      setCategory([...result]);
-    }
-  };
-  useEffect(() => {
-    getProduct();
-  }, []);
+const Navigation = (props) => {
+  let { categories } = props;
   let dispatchBrand = useDispatch();
-  // let [query, setQuery] = useSearchParams();
   const handleBrand = (e) => {
     e.preventDefault();
     if (e.target.value) {
       dispatchBrand(addBrand(e.target.value));
-      // setQuery({ brand: e.target.value });
     }
   };
   const handleSort = (value) => {
@@ -196,8 +172,8 @@ const Navigation = () => {
                 All
               </button>
             </li>
-            {category &&
-              category.map((ele, i) => {
+            {categories &&
+              categories.map((ele, i) => {
                 return (
                   <li key={i}>
                     <button
