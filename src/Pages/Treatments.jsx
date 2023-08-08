@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProducts } from "../Redux/Action";
 import Header from "../Components/Header";
 
-const CovidEssentials = () => {
+const Treatments = () => {
   let [categories, setCategories] = useState([]);
   let dispatch = useDispatch();
   let reduxProducts = useSelector((store) => store.products);
@@ -14,7 +14,7 @@ const CovidEssentials = () => {
   let sort = useSelector((store) => store.sort);
   const getProduct = async () => {
     await axios
-      .get("https://bewildered-mite-loincloth.cyclic.app/covid")
+      .get("https://bewildered-mite-loincloth.cyclic.app/treatments")
       .then((res) => {
         handleCategory(res.data);
         test(res.data);
@@ -92,4 +92,4 @@ const CovidEssentials = () => {
   );
 };
 
-export default CovidEssentials;
+export default Treatments;
