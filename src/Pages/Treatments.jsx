@@ -14,7 +14,7 @@ const Treatments = () => {
   let sort = useSelector((store) => store.sort);
   const getProduct = async () => {
     await axios
-      .get("http://localhost:8020/treatments")
+      .get("https://bewildered-mite-loincloth.cyclic.app/treatments")
       .then((res) => {
         handleCategory(res.data);
         test(res.data);
@@ -75,7 +75,7 @@ const Treatments = () => {
   }, [sort, brand]);
   return (
     <>
-    <Header/>
+      <Header />
       <div className="products-covid">
         <div className="container">
           <div className="padding-100 row">
