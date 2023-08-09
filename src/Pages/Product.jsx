@@ -1,44 +1,74 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../reduxToollkit/userSlice";
 
 const Product = () => {
   let [pro, setPro] = useState([]);
   let [cartpro, setCartpro] = useState();
+  let [rdata, setRdata] = useState([]);
+  let [todos, setTodos] = useState([]);
   let [test, setTest] = useState([{ product: "test" }]);
+  let dispatch = useDispatch()
+  let id = JSON.parse(localStorage.getItem('id'))
 
-  let get = async () => {
-    let req = await fetch("https://dummyjson.com/products");
-    let res = await req.json();
-    setPro(res.products);
-  };
-
-  let handlemail = () => {
-    axios
-      .get(`http://localhost:8010`)
-      .then((res) => {
-        // handleCartProduct(res.data);
-        console.log(res.data);
-      })
-      .catch(() => console.log("data not found"));
-  };
-  const handleCartProduct = (res) => {
-    let data = res.filter((e) => e.email === "limbaniharsh1@gmail.com");
-    setCartpro(data[0]._id);
-  };
-
-  const handleAddCart = (i) => {
-    axios
-      .get(`http://localhost:8010/users/64b8c206c649f05f9e371731`)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch(() => console.log("data not found"));
-  };
+  let selectdata =
+    useSelector((state) => {return state.users;}) || [];
+  let nav = useNavigate();
 
   useEffect(() => {
     get();
-    handlemail();
-  }, []);
+  },[]);
+
+  let get = async () => {
+    try {
+      let req = await fetch("https://dummyjson.com/products");
+      let res = await req.json();
+      setPro(res.products);
+      // setRdata(selectdata[0]);
+      setRdata(id)
+      if (selectdata[0] !== undefined) {
+        fetchdata();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  let fetchdata = () => {
+    try {
+      axios
+        .get(`http://localhost:8010/users/${id}`)
+        .then((res) => {
+          setTodos(res.data.product);
+        })
+        .catch(() => console.log("data not found"));
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const handleAddCart = (i) => {
+    // console.log(rdata._id)
+    if (rdata != undefined) {
+      let updatedTodos = [...todos, i];
+      axios
+      .patch(`http://localhost:8010/users/${id}`, {
+        product: updatedTodos,
+      })
+      .then((res) => {
+        console.log(res.data);
+        dispatch(addUser(res.data));
+        fetchdata()
+          alert("item added");
+        })
+        .catch(() => alert("item not added"));
+    } else {
+      alert("you have to login");
+      nav("/login");
+    }
+  };
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -53,6 +83,7 @@ const Product = () => {
             >
               add to cart
             </button>
+            <button onClick={() => nav("/cart")}>cart</button>
           </div>
         );
       })}

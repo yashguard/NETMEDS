@@ -53,6 +53,14 @@
   .firstimg{
     display: none;
   }
+
+  .fs-1{
+    font-size: 1.2rem;
+  }
+  .cartproduct{
+    max-width: 50%;
+  }
+
 }
 
 @media (min-width: 576px) and (max-width: 767px) {

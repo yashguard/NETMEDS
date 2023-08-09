@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../reduxToollkit/userSlice'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
 
 const Home = () => {
+  let[udata,setUdata]=useState({fname:"user",lname:''})
+  let[rdata,setRdata]=useState([])
+  let dispatch = useDispatch()
+  let nav = useNavigate()
+  let id = JSON.parse(localStorage.getItem('id'))
+
+  
+  let data = useSelector((state)=>{return state.users}) || []
+  let getdata =()=>{
+    axios.get(`http://localhost:8010/users/${id}`).then((res)=>setUdata(id ? res.data : {fname:"user",lname:''}))
+  }
   useEffect(() => {
     getdata()
   }, [])
   
-  let[udata,setUdata]=useState({fname:"user",lname:""})
-  let[rdata,setRdata]=useState([])
-  let dispatch = useDispatch()
-  let data = useSelector((state)=>{return state.users}) || []
-  let getdata =()=>{
-    checkData()
-  }
-  let checkData =()=>{
-    console.log(data.length)
-    setUdata(data.length >0 ? data[0] : {fname:"user",lname:""}) 
-    console.log('done')
-  }
   return (
     <div>
-      <button onClick={()=>getdata()}>get data</button>
-      <h2> hi : {udata.fname} <span>{udata.lname}</span></h2>
+      <h2> <span style={{fontSize:'18px'}}>hi </span> {udata.fname} {udata.lname}</h2>
+      <button onClick={()=>nav('/product')}>products</button>
     </div>
   )
 }

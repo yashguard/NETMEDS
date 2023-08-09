@@ -3,9 +3,15 @@ import FirstImage from "./FirstImage";
 import "../App.css";
 import "../Media.css";
 import axios from "axios";
-import { emailLogin, googleauth, reset, resetpass, verification } from "./Config";
-import { Auth } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import {
+  emailLogin,
+  googleauth,
+  reset,
+  resetpass,
+  verification,
+} from "./Config";
+import { Auth, getAuth, sendEmailVerification } from "firebase/auth";
+import { json, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../reduxToollkit/userSlice";
 
@@ -14,89 +20,55 @@ const SignIn = (props) => {
   let [pass, setPass] = useState("");
   let [id, setId] = useState(0);
   let nav = useNavigate();
-  let dispatch=useDispatch()
+  let dispatch = useDispatch();
 
   let checkforgot = false;
 
-  const handlevarify = () => {
-    axios.get(`http://localhost:8010/users`).then((res) => {
+  const handletoolkitdata = () => {
+    axios.get(`http://localhost:8010/`).then((res) => {
       let data = res.data.filter((e, i) => e.email === email);
+      dispatch(addUser(...data));
+      localStorage.setItem("id", JSON.stringify(data[0]._id));
+      nav("/");
+    });
+  };
 
-      if(data[0].verify == false){
-        alert('you not verify please varify first')
-        alert('we send verification on your email')
-        verification(email)
+  let handlesubmit = async(e) => {
+    e.preventDefault();
+    emailLogin(email, pass).then((authuser)=>{
+      let user = authuser.user
+      if(!user.emailVerified){
+        let auth = getAuth()
+        sendEmailVerification(auth.currentUser).then(()=>alert('email verification link has been sent to your email address')).catch((error)=>console.log('sendin mail error : ',error))
       }
       else{
-        alert("verified")
-      }
-    });
-  };
-
- const handletoolkitdata =()=>{
-  axios.get(`http://localhost:8010/`).then((res)=>{
-    let data = res.data.filter((e, i) => e.email === email);
-    dispatch(addUser(...data))
-    console.log(...data)
-    nav('/')
-  })
- }
-
-  let handlesubmit = (e) => {
-    e.preventDefault();
-    emailLogin(email, pass)
-      .then(() => {
-        // handlevarify();
         handletoolkitdata()
-        // alert('success')
-      })
-      .catch((err) => alert("email / password not match"));
-
-    if (checkforgot == true) {
-      handlemail();
-    }
-  };
-
-  let handlemail = () => {
-    axios.get(`http://localhost:8010/users`).then((res) => {
-      res.data.filter((e, i) => {
-        if (e.email === email) {
-          setId(e._id);
-          console.log(e._id);
-        }
-      });
-    });
+      }
+    }).catch((error)=>{alert("email / password not match")});
+      // .then(() => {handletoolkitdata()})
   };
 
   let handleforgot = (e) => {
     alert("check google email");
     resetpass(email)
-      .then((val) => {
-        console.log("completed", val);
-        checkforgot = true;
-        handlemail(email);
-      })
-      .catch(() => {
-        alert("email not found");
-      });
+      .then((val) => {checkforgot = true;})
+      .catch(() => {alert("email not found")});
   };
 
-  const handledata = (res) => {
-    let data = res;
-    axios.get(`http://localhost:3003/posts`).then((res) => {
-      res.data.filter((e, i) => {
-        if (e.email === data) {
-          setPass(e.password);
-          console.log();
-        }
-      });
-    })
+  const handledata = (email) => {
+    axios.get(`http://localhost:8010`).then((res) => {
+      let data = res.data.filter((e, i) => e.email === email);
+      if (data.length === 0) {alert('you have to signup')} 
+      else {
+        localStorage.setItem("id", JSON.stringify(data[0]._id));
+        nav("/");
+      }
+    });
   };
   const handleauth = () => {
-    googleauth().then((details) => {
-      setEmail(details._tokenResponse.email);
-      handledata(details._tokenResponse.email);
-    });
+    try {
+      googleauth().then((details) => {handledata(details._tokenResponse.email)});
+    } catch (error) {console.log(error);}
   };
 
   return (
@@ -118,7 +90,7 @@ const SignIn = (props) => {
                   placeholder="Enter your email id"
                   className="signin-input p-1"
                   required
-                  value={email}
+                  // value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <h5 className="text-main fw-400 mt-2">Password</h5>
