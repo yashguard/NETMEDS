@@ -50,7 +50,7 @@ const CovidEssentials = () => {
               .filter((products) => products.category === brand)
               .sort((a, b) => a.price - b.price)
           )
-        );
+        )
       }
     } else if (sort || brand) {
       if (sort === "high-to-low") {
