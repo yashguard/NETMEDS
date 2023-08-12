@@ -30,11 +30,11 @@ const Cart = () => {
       .then((res) => {
         cartData(res.data.product);
         console.log(res.data.product);
-        // let tprice = res.data.product.reduce((acc, curr) => acc.price + curr.price);
-        res.data.product.map((e, i) => {
-          total += e.price
-        });
-        setSubTotal(total)
+        let tprice = res.data.product.reduce((acc, curr) => acc + curr.price,0);
+        // res.data.product.map((e, i) => {
+        //   total += e.price
+        // });
+        setSubTotal(tprice)
       })
       .catch((error) => console.log(error));
     console.log(selectdata[0]._id);
