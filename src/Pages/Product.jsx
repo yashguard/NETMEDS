@@ -16,7 +16,7 @@ const Product = () => {
 
   let get = async () => {
     try {
-      let req = await fetch("https://dummyjson.com/products");
+      let req = await fetch("https://dummyjson.com/products")
       let res = await req.json();
       setPro(res.products);
       // setRdata(selectdata[0]);
