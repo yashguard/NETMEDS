@@ -14,7 +14,7 @@ const CartProducts = (props) => {
   let incre =()=>{
     setQty(qty+1)
   }
-  console.log({...props.products,qty})
+  // console.log({...props.products,qty})
   let decre =()=>{
     if(qty <= 1){
       setQty(1)

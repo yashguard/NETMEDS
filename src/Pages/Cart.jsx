@@ -8,15 +8,10 @@ const Cart = () => {
   let [pro, setPro] = useState([]);
   let [cartCheck, setCartCheck] = useState(false);
   let [cartItem, setCartItem] = useState();
-
   let [subTotal, setSubTotal] = useState(0);
   let [shipping, setShipping] = useState(5);
-  let total = 0;
 
-  let selectdata =
-    useSelector((state) => {
-      return state.users;
-    }) || [];
+  // let selectdata = useSelector((state) => {return state.users}) || [];
   let nav = useNavigate();
   let id = JSON.parse(localStorage.getItem("id"));
 
@@ -29,15 +24,11 @@ const Cart = () => {
       .get(`http://localhost:8010/users/${id}`)
       .then((res) => {
         cartData(res.data.product);
-        console.log(res.data.product);
         let tprice = res.data.product.reduce((acc, curr) => acc + curr.price,0);
-        // res.data.product.map((e, i) => {
-        //   total += e.price
-        // });
         setSubTotal(tprice)
       })
       .catch((error) => console.log(error));
-    console.log(selectdata[0]._id);
+    // console.log(selectdata[0]._id);
   };
 
   let getdata = () => {
@@ -53,15 +44,10 @@ const Cart = () => {
     setPro(res);
     setCartCheck(true);
     setCartItem(res.length);
-
-    const newSubTotal = res.reduce((acc, curr) => acc + curr.price, 0);
-  console.log(newSubTotal);
-
     if (res.length === 0 || res === undefined) {
       setCartCheck(false);
     }
   };
-  console.log(pro.length);
 
   return (
     <div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser } from '../reduxToollkit/userSlice'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -8,12 +7,11 @@ import axios from 'axios'
 const Home = () => {
   let[udata,setUdata]=useState({fname:"user",lname:''})
   let[rdata,setRdata]=useState([])
-  let dispatch = useDispatch()
   let nav = useNavigate()
   let id = JSON.parse(localStorage.getItem('id'))
 
   
-  let data = useSelector((state)=>{return state.users}) || []
+  // let data = useSelector((state)=>{return state.users}) || []
   let getdata =()=>{
     axios.get(`http://localhost:8010/users/${id}`).then((res)=>setUdata(id ? res.data : {fname:"user",lname:''}))
   }

@@ -13,7 +13,7 @@ import {
 import { Auth, getAuth, sendEmailVerification } from "firebase/auth";
 import { json, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser } from "../reduxToollkit/userSlice";
+// import { addUser } from "../reduxToollkit/userSlice";
 
 const SignIn = (props) => {
   let [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ const SignIn = (props) => {
   const handletoolkitdata = () => {
     axios.get(`http://localhost:8010/`).then((res) => {
       let data = res.data.filter((e, i) => e.email === email);
-      dispatch(addUser(...data));
+      // dispatch(addUser(...data));
       localStorage.setItem("id", JSON.stringify(data[0]._id));
       nav("/");
     });

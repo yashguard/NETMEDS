@@ -2,19 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addUser } from "../reduxToollkit/userSlice";
 
 const Product = () => {
   let [pro, setPro] = useState([]);
-  let [cartpro, setCartpro] = useState();
   let [rdata, setRdata] = useState([]);
   let [todos, setTodos] = useState([]);
-  let [test, setTest] = useState([{ product: "test" }]);
-  let dispatch = useDispatch()
   let id = JSON.parse(localStorage.getItem('id'))
-
-  let selectdata =
-    useSelector((state) => {return state.users;}) || [];
   let nav = useNavigate();
 
   useEffect(() => {
@@ -28,8 +21,8 @@ const Product = () => {
       setPro(res.products);
       // setRdata(selectdata[0]);
       setRdata(id)
-      if (selectdata[0] !== undefined) {
-        fetchdata();
+      if (res !== undefined) {
+        // fetchdata();
       }
     } catch (error) {
       console.log(error);
@@ -59,7 +52,7 @@ const Product = () => {
       })
       .then((res) => {
         console.log(res.data);
-        dispatch(addUser(res.data));
+        // dispatch(addUser(res.data));
         fetchdata()
           alert("item added");
         })
