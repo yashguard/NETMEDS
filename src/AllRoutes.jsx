@@ -6,6 +6,7 @@ import Login from './Pages/Login'
 import Product from './Pages/Product'
 import SignIn from './Components/SignIn'
 import Cart from './Pages/Cart'
+import Filter from './Pages/Filter'
 
 const AllRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AllRoutes = () => {
         <Route path='/login' element={<Login/>} />
         <Route path='/product' element={<Product/>} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/filter' element={<Filter/>} />
       </Routes>
     </div>
   )

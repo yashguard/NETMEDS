@@ -1,18 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 const CartProducts = (props) => {
   let [cartCount, setCartCount] = useState(0);
   let[check,setCheck]=useState([])
   let[check2,setCheck2]=useState([])
   let[qty,setQty]=useState(1)
+  let[searchParams,setSearchParams]=useSearchParams()
   let id = JSON.parse(localStorage.getItem('id'))
   let total = 0;
   
-  
-  let incre =()=>{
+  let updateQty =async(quantity)=>{
+    axios.patch(`http://localhost:8010/pro/qty?userid=64c48a336d3a8164922585cc&proid=0&qty=${quantity}`).then((res)=>console.log(res)).catch((error)=>console.log(error))
+  }
+
+  let incre =(e)=>{
     setQty(qty+1)
+    // setSearchParams({qty:qty+1})
+    console.log(qty+1)
+    updateQty(qty+1)
   }
   // console.log({...props.products,qty})
   let decre =()=>{
@@ -21,6 +29,8 @@ const CartProducts = (props) => {
     }
     else{
       setQty(qty-1)
+      // setSearchParams({qty:qty-1})
+      updateQty(qty-1)
     }
   }
 
@@ -56,7 +66,7 @@ const CartProducts = (props) => {
                 className="text-center"
                 style={{ maxWidth: "20px", border: "none" }}
               />
-              <h2 className="fs-2 fw-300 qty-btn" onClick={()=>incre()}>+</h2>
+              <h2 className="fs-2 fw-300 qty-btn" onClick={(e)=>incre(e)}>+</h2>
             </div>
           </div>
         </div>

@@ -14,22 +14,22 @@ const Cart = () => {
   // let selectdata = useSelector((state) => {return state.users}) || [];
   let nav = useNavigate();
   let id = JSON.parse(localStorage.getItem("id"));
-
-  useEffect(() => {
-    getdata();
-  }, []);
-
+  
   let apidata = () => {
     axios
       .get(`http://localhost:8010/users/${id}`)
       .then((res) => {
         cartData(res.data.product);
-        let tprice = res.data.product.reduce((acc, curr) => acc + curr.price,0);
+        let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
         setSubTotal(tprice)
       })
       .catch((error) => console.log(error));
-    // console.log(selectdata[0]._id);
-  };
+      // console.log(selectdata[0]._id);
+    };
+    
+      useEffect(() => {
+        getdata();
+      }, [apidata()]);
 
   let getdata = () => {
     try {
