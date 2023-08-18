@@ -7,31 +7,43 @@ const CartProducts = (props) => {
   let [cartCount, setCartCount] = useState(0);
   let[check,setCheck]=useState([])
   let[check2,setCheck2]=useState([])
-  let[qty,setQty]=useState(1)
+  let[qty,setQty]=useState(0)
   let[searchParams,setSearchParams]=useSearchParams()
   let id = JSON.parse(localStorage.getItem('id'))
   let total = 0;
+
+  useEffect(() => {
+    getdata()
+  }, [])
+  
   
   let updateQty =async(quantity)=>{
-    axios.patch(`http://localhost:8010/pro/qty?userid=64c48a336d3a8164922585cc&proid=0&qty=${quantity}`).then((res)=>console.log(res)).catch((error)=>console.log(error))
+    await axios.patch(`http://localhost:8010/pro/qty?userid=${id}&proid=${props.index}&qty=${quantity}`).then((res)=>console.log(res)).catch((error)=>console.log(error))
+    props.apidata()
+  }
+
+  let getdata=()=>{
+    setQty(props.products.qty)
   }
 
   let incre =(e)=>{
     setQty(qty+1)
-    // setSearchParams({qty:qty+1})
     console.log(qty+1)
     updateQty(qty+1)
   }
-  // console.log({...props.products,qty})
   let decre =()=>{
     if(qty <= 1){
       setQty(1)
     }
     else{
       setQty(qty-1)
-      // setSearchParams({qty:qty-1})
       updateQty(qty-1)
     }
+  }
+  let inputChangeQty=(e)=>{
+    let num = Number(e)
+      setQty(num)
+      updateQty(num)
   }
 
   return (
@@ -62,7 +74,9 @@ const CartProducts = (props) => {
               <h2 className="fs-2 fw-300 qty-btn" onClick={()=>decre()}>-</h2>
               <input
                 type="text"
+                onChange={(e)=>inputChangeQty(e.target.value)}
                 value={qty}
+                // defaultValue={qty}
                 className="text-center"
                 style={{ maxWidth: "20px", border: "none" }}
               />

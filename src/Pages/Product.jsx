@@ -22,7 +22,7 @@ const Product = () => {
       // setRdata(selectdata[0]);
       setRdata(id)
       if (res !== undefined) {
-        // fetchdata();
+        fetchdata();
       }
     } catch (error) {
       console.log(error);
@@ -35,6 +35,7 @@ const Product = () => {
         .get(`http://localhost:8010/users/${id}`)
         .then((res) => {
           setTodos(res.data.product);
+          console.log(res.data.product)
         })
         .catch(() => console.log("data not found"));
     } catch (error) {
@@ -45,7 +46,9 @@ const Product = () => {
   const handleAddCart = (i) => {
     // console.log(rdata._id)
     if (rdata != undefined) {
-      let updatedTodos = [...todos, i];
+      console.log(i)
+      let updatedTodos = [...todos,{...i,qty:1}];
+      console.log(updatedTodos)
       axios
       .patch(`http://localhost:8010/users/${id}`, {
         product: updatedTodos,

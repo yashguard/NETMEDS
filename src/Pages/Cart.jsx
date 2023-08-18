@@ -15,28 +15,32 @@ const Cart = () => {
   let nav = useNavigate();
   let id = JSON.parse(localStorage.getItem("id"));
   
-  let apidata = () => {
-    axios
+  
+  useEffect(() => {
+    apidata()
+    // getdata();
+  }, []);
+  let apidata = async() => {
+   await axios
       .get(`http://localhost:8010/users/${id}`)
       .then((res) => {
         cartData(res.data.product);
-        let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
-        setSubTotal(tprice)
+        let tprice = res.data.product.reduce((acc,curr)=>{return acc+curr.price*curr.qty},0)
+        // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
+        setSubTotal(tprice);
+        console.log(tprice)
       })
       .catch((error) => console.log(error));
       // console.log(selectdata[0]._id);
     };
     
-      useEffect(() => {
-        getdata();
-      }, [apidata()]);
 
   let getdata = () => {
     try {
       // cartData(selectdata[0].product);
       apidata();
     } catch (error) {
-      setCartCheck(false);
+      alert("data not found");
     }
   };
 
@@ -68,6 +72,8 @@ const Cart = () => {
                   <div key={i}>
                     <CartProducts
                       products={{ ...ele }}
+                      apidata={getdata}
+                      index={i}
                       setSubTotal={setSubTotal}
                       subTotal={subTotal}
                     />
