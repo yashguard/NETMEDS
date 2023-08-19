@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
   sendPasswordResetEmail,
@@ -29,6 +30,11 @@ export const googleauth = () => {
 };
 export const signout = () => {
   return auth.signOut();
+};
+export const emailauth = async (email, password) => {
+  let userData = await createUserWithEmailAndPassword(auth, email, password);
+  await sendEmailVerification(userData.user)
+  return userData.user.emailVerified
 };
 export const emailLogin =(email,password)=>{
   return signInWithEmailAndPassword(auth , email,password)

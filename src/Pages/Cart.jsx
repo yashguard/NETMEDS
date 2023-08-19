@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartProducts from "./CartProducts";
+import Header from "../Components/Header";
 
 const Cart = () => {
   let [pro, setPro] = useState([]);
@@ -25,6 +26,7 @@ const Cart = () => {
       .get(`http://localhost:8010/users/${id}`)
       .then((res) => {
         cartData(res.data.product);
+        console.log(res.data.product)
         let tprice = res.data.product.reduce((acc,curr)=>{return acc+curr.price*curr.qty},0)
         // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
         setSubTotal(tprice);
@@ -55,15 +57,16 @@ const Cart = () => {
 
   return (
     <div>
+      <Header/>
       <div className="container">
-        <div className="row mt-3 mb-2 align-item-center justify-content-between">
+        <div className="row mt-1 mb-2 align-item-center justify-content-between">
           <h2 className="fs-3 title-color">my cart</h2>
           <h2 className="fs-2 fw-400">{cartItem} : items</h2>
         </div>
         <hr />
         {cartCheck ? (
           <div>
-            <div className="row align-item-center mt-2 mb-2 fs-1 text-main">
+            <div className="row align-item-center mt-1 mb-2 fs-1 text-main">
               <p>product detail</p>
             </div>
             <div className="cart">
@@ -83,7 +86,7 @@ const Cart = () => {
             </div>
             <div className="row justify-content-between mt-2 mb-2">
               <div>
-                <button className="cart-btn" onClick={() => nav("/product")}>
+                <button className="cart-btn" onClick={() => nav("/product/covidessentials")}>
                   continue shopping
                 </button>
               </div>
@@ -116,7 +119,7 @@ const Cart = () => {
               </div>
               <button
                 className="me-auto mt-3 sign-btn pt-2 pb-2"
-                onClick={() => nav("/product")}
+                onClick={() => nav("/product/covidessentials")}
               >
                 add products
               </button>
