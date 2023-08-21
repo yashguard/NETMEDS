@@ -22,8 +22,14 @@ const CartProducts = (props) => {
     props.apidata()
   }
 
-  let getdata=()=>{
+  let getdata=async()=>{
     setQty(props.products.qty)
+    await axios
+      .get(`http://localhost:8010/users/${id}`)
+      .then((res) => {
+        setCheck(res.data.product)
+      })
+      .catch((error) => console.log(error));
   }
 
   let incre =(e)=>{
@@ -45,6 +51,12 @@ const CartProducts = (props) => {
       setQty(num)
       updateQty(num)
   }
+  let deleteProduct=(event)=>{
+    // console.log(event)
+    setCheck(check.filter((e,i)=>i != event))
+    // setCheck(check.filter((e,i)=>i!==event))
+  }
+  // console.log(check)
 
   return (
     <div className="mt-3 container text-center">
@@ -62,7 +74,7 @@ const CartProducts = (props) => {
           >
             <h2 className="fs-1">{props.products.title}</h2>
             <h6 className="text-main">{props.products.brand}</h6>
-            <p>remove</p>
+            <p onClick={()=>deleteProduct(props.index)}>remove</p>
           </div>
         </div>
         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
