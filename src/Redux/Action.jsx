@@ -1,8 +1,13 @@
-import { add_Users, add_Products, add_Brands, add_Sort } from "./ActionType";
+import { add_Users, add_Products, add_Brands, add_Sort, add_user_product } from "./ActionType";
 
 export const addUsers = (fname, lname, email, password, cpassword, verify) => {
   return { type: add_Users, fname, lname, email, password, cpassword, verify };
 };
+
+export const addUserProduct = (cartproducts) =>{
+  // console.log(cartproducts)
+  return{type:add_user_product,cartproducts}
+}
 
 export const addProducts = (products) => {
   return { type: add_Products, products };

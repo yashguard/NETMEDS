@@ -1,6 +1,18 @@
-import { add_Users, add_Brands, add_Products, add_Sort } from "./ActionType";
+import {
+  add_Users,
+  add_Brands,
+  add_Products,
+  add_Sort,
+  add_user_product,
+} from "./ActionType";
 
-let initialState = { user: [], products: [], brand: "", sort: "" };
+let initialState = {
+  user: [],
+  cartProducts: [],
+  products: [],
+  brand: "",
+  sort: "",
+};
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case add_Users:
@@ -16,6 +28,12 @@ export const reducer = (state = initialState, action) => {
             verify: action.verify,
           },
         ],
+      };
+
+    case add_user_product:
+      return {
+        ...state,
+        cartProducts: [...action.cartproducts],
       };
 
     case add_Products:

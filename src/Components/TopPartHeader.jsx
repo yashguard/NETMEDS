@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const TopPartHeader = () => {
+  let localid = JSON.parse(localStorage.getItem("id"))
+  let photoUrl = JSON.parse(localStorage.getItem('photoUrl'))
+  // console.log(localid)
   return (
     <div className="header">
       <div className="section-page-1">
@@ -43,17 +46,16 @@ const TopPartHeader = () => {
               <div className="texte">
                 <img src="https://www.netmeds.com/assets/gloryweb/images/icons/cart_icon.svg"></img>
               </div>
-
               <Link to="/cart" className="color1">
                 Cart
               </Link>
             </div>
             <div className="iocon-box">
               <div className="texte">
-                <img src="https://www.netmeds.com/assets/gloryweb/images/icons/profile_icon.svg"></img>
+                <img style={localid != undefined ? {display:'none'}:{display:'block'}} src="https://www.netmeds.com/assets/gloryweb/images/icons/profile_icon.svg"></img>
               </div>
               <Link to="/login" className="color1">
-                Sign in / Sign up
+                {localid != undefined ? <img style={{width:"4rem",borderRadius:'50px',border:"1px solid black"}} src={photoUrl} alt="" srcset="" /> :'Sign in / Sign up'}
               </Link>
               <a className="color"></a>
             </div>

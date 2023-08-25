@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartProducts from "./CartProducts";
 import Header from "../Components/Header";
+import { addUserProduct } from "../Redux/Action";
 
 const Cart = () => {
   let [pro, setPro] = useState([]);
@@ -12,34 +13,29 @@ const Cart = () => {
   let [subTotal, setSubTotal] = useState(0);
   let [shipping, setShipping] = useState(5);
 
-  // let selectdata = useSelector((state) => {return state.users}) || [];
+  let selectdata = useSelector((store) => store.cartProducts);
+  let dispatch = useDispatch([]);
   let nav = useNavigate();
   let id = JSON.parse(localStorage.getItem("id"));
-  
-  
-  useEffect(() => {
-    apidata()
-    // getdata();
-  }, []);
-  let apidata = async() => {
-   await axios
-      .get(`http://localhost:8010/users/${id}`)
-      .then((res) => {
-        cartData(res.data.product);
-        console.log(res.data.product)
-        let tprice = res.data.product.reduce((acc,curr)=>{return acc+curr.price*curr.qty},0)
-        // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
-        setSubTotal(tprice);
-        console.log(tprice)
-      })
-      .catch((error) => console.log(error));
-      // console.log(selectdata[0]._id);
-    };
-    
 
+  const test = (data) => {
+    cartData(data);
+    let tprice = data.reduce((acc, curr) => {
+      return acc + curr.price * curr.qty;
+    }, 0);
+    // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
+    setSubTotal(tprice);
+  };
+  let apidata = async () => {
+    await axios.get(`http://localhost:8010/users/${id}`).then((res) => {
+      dispatch(addUserProduct(res.data.product))
+      test(res.data.product);
+      // console.log(check.cartproducts)
+    });
+  };
+console.log(selectdata)
   let getdata = () => {
     try {
-      // cartData(selectdata[0].product);
       apidata();
     } catch (error) {
       alert("data not found");
@@ -55,9 +51,13 @@ const Cart = () => {
     }
   };
 
+  useEffect(() => {
+    getdata();
+    apidata();
+  }, []);
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="container">
         <div className="row mt-1 mb-2 align-item-center justify-content-between">
           <h2 className="fs-3 title-color">my cart</h2>
@@ -86,15 +86,18 @@ const Cart = () => {
             </div>
             <div className="row justify-content-between mt-2 mb-2">
               <div>
-                <button className="cart-btn" onClick={() => nav("/product/covidessentials")}>
+                <button
+                  className="cart-btn"
+                  onClick={() => nav("/product/covidessentials")}
+                >
                   continue shopping
                 </button>
               </div>
               <div>
-                <h2>sub total : ${subTotal}</h2>
+                <h2>sub total : ${Math.round(subTotal)}</h2>
                 <h2>shipping : ${shipping}</h2>
                 <hr />
-                <h2>total : ${subTotal + shipping}</h2>
+                <h2>total : ${Math.round(subTotal) + shipping}</h2>
               </div>
             </div>
           </div>

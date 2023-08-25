@@ -24,10 +24,11 @@ const SignIn = (props) => {
 
   let checkforgot = false;
 
-  const handletoolkitdata = () => {
+  const handletoolkitdata = (e) => {
     axios.get(`http://localhost:8010/`).then((res) => {
       let data = res.data.filter((e, i) => e.email === email);
       // dispatch(addUser(...data));
+      localStorage.setItem("photoUrl",JSON.stringify(e.user.reloadUserInfo.photoUrl))
       localStorage.setItem("id", JSON.stringify(data[0]._id));
       nav("/");
     });
@@ -40,9 +41,10 @@ const SignIn = (props) => {
       if(!user.emailVerified){
         let auth = getAuth()
         sendEmailVerification(auth.currentUser).then(()=>alert('email verification link has been sent to your email address')).catch((error)=>console.log('sendin mail error : ',error))
+        console.log(auth)
       }
       else{
-        handletoolkitdata()
+        handletoolkitdata(authuser)
       }
     }).catch((error)=>{alert("email / password not match")});
       // .then(() => {handletoolkitdata()})
