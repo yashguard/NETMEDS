@@ -41,7 +41,6 @@ const SignIn = (props) => {
       if(!user.emailVerified){
         let auth = getAuth()
         sendEmailVerification(auth.currentUser).then(()=>alert('email verification link has been sent to your email address')).catch((error)=>console.log('sendin mail error : ',error))
-        console.log(auth)
       }
       else{
         handletoolkitdata(authuser)
@@ -57,11 +56,12 @@ const SignIn = (props) => {
       .catch(() => {alert("email not found")});
   };
 
-  const handledata = (email) => {
+  const handledata = (email,photo) => {
     axios.get(`http://localhost:8010`).then((res) => {
       let data = res.data.filter((e, i) => e.email === email);
       if (data.length === 0) {alert('you have to signup')} 
       else {
+        localStorage.setItem("photoUrl",JSON.stringify(photo))
         localStorage.setItem("id", JSON.stringify(data[0]._id));
         nav("/");
       }
@@ -69,7 +69,7 @@ const SignIn = (props) => {
   };
   const handleauth = () => {
     try {
-      googleauth().then((details) => {handledata(details._tokenResponse.email)});
+      googleauth().then((details) => {handledata(details._tokenResponse.email,details.user.photoURL)});
     } catch (error) {console.log(error);}
   };
 

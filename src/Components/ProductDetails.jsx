@@ -107,7 +107,7 @@ const ProductDetails = () => {
             <p className="p">*{data.description}</p>
             <p className="p">*Country of Origin: India</p>
             <p className="p">*Delivery charges if applicable will be applied at checkout</p>
-            <button onClick={(e)=>handleAddCart(e)} className="sign-btn pt-3 pb-3 mt-3" style={{width:'170px'}}>ADD TO CART</button>
+            {data.title ? <button onClick={(e)=>handleAddCart(e)} className="sign-btn pt-3 pb-3 mt-3" style={{width:'170px'}}>ADD TO CART</button> : <button disabled onClick={(e)=>handleAddCart(e)} className=" pt-3 pb-3 mt-3" style={{width:'170px'}}>ADD TO CART</button>}
             <hr className="mt-3"/>
             <div className="row justify-content-between mt-2">
               <h3 className="fs-1 text-main">Availability & Expiry</h3>

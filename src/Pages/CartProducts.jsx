@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { addUserProduct, editUserProduct } from "../Redux/Action";
+import { addUserProduct, deleteUserProduct, editUserProduct } from "../Redux/Action";
 
 const CartProducts = (props) => {
   let [cartCount, setCartCount] = useState(0);
@@ -23,7 +23,6 @@ const CartProducts = (props) => {
     await axios.patch(`http://localhost:8010/pro/qty?userid=${id}&proid=${props.index}&qty=${quantity}`).then((res)=>console.log(res)).catch((error)=>console.log(error))
     // props.apidata()
   }
-  // console.log(selectdata)
 
   let getdata=async()=>{
     setQty(props.products.qty)
@@ -41,7 +40,6 @@ const CartProducts = (props) => {
     setQty(qty+1)
     updateQty(qty+1)
     dispatch(editUserProduct(e,newqty))
-    // console.log(e)
   }
   let decre =(e)=>{
     let newqty = qty-1
@@ -61,16 +59,14 @@ const CartProducts = (props) => {
       updateQty(num)
   }
   let deleteProduct=(event)=>{
-    // console.log(event)
-    setCheck(check.filter((e,i)=>i != event))
-    // setCheck(check.filter((e,i)=>i!==event))
+    dispatch(deleteUserProduct(event))
+    props.deletedata(event)
   }
-  // console.log(check)
 
   return (
     <div className="mt-3 container text-center">
       <div className="row  align-item-center justify-content-center">
-        <div className="col-xs-12 mb-5 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5 row align-item-center justify-content-center">
+        <div className="col-xs-12 mb-5 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7 row align-item-center justify-content-center">
           <img
             className="cartproduct img-fluid"
             style={{ width: "200px" }}
@@ -83,10 +79,10 @@ const CartProducts = (props) => {
           >
             <h2 className="fs-1">{props.products.title}</h2>
             <h6 className="text-main">{props.products.brand}</h6>
-            <p onClick={()=>deleteProduct(props.index)}>remove</p>
+            <p className="c-pointer p fs-1" onClick={()=>deleteProduct(props.products)}>remove</p>
           </div>
         </div>
-        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-1 col-xl-1 col-xxl-1">
           <h2 className="fs-1">${props.products.price}</h2>
         </div>
         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
@@ -105,7 +101,7 @@ const CartProducts = (props) => {
             </div>
           </div>
         </div>
-        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-1 col-xl-1 col-xxl-1">
           <h2 className="fs-1">${Math.round(props.products.price * qty)}</h2>
         </div>
       </div>

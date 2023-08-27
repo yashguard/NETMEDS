@@ -5,6 +5,7 @@ import {
   add_Sort,
   add_user_product,
   edit_user_product,
+  delete_user_product,
 } from "./ActionType";
 
 let initialState = {
@@ -47,14 +48,22 @@ export const reducer = (state = initialState, action) => {
         }
         return item;
       });
-      console.log(updatedCartProducts)
-
+      
       return {
         ...state,
         cartProducts: updatedCartProducts,
       };
 
-      case add_Products:
+    case delete_user_product:
+      let deleteCartProduct = state.cartProducts.filter(
+        (item) => item._id !== action.cartproduct._id
+      );
+      return{
+        ...state,
+        cartProducts:deleteCartProduct
+      }
+
+    case add_Products:
       return {
         ...state,
         products: [...action.products],

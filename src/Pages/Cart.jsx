@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import CartProducts from "./CartProducts";
 import Header from "../Components/Header";
 import { addUserProduct } from "../Redux/Action";
-import Total from "./Total";
 
 const Cart = () => {
   let [pro, setPro] = useState([]);
@@ -13,44 +12,33 @@ const Cart = () => {
   let [cartItem, setCartItem] = useState();
   let [subTotal, setSubTotal] = useState(0);
   let [shipping, setShipping] = useState(5);
-  let [allData,setAllData] = useState([])
+  let [user,setUser]=useState()
 
   let selectdata = useSelector((store) => store.cartProducts);
   let dispatch = useDispatch();
   let nav = useNavigate();
   let id = JSON.parse(localStorage.getItem("id"));
 
-  const test = (data,mydata) => {
+  const test = (data) => {
     cartData(data);
-    // console.log(mydata)
-    let tprice = mydata.reduce((acc, curr) => {
-        return acc + curr.price * curr.qty;
-        // console.log(curr.qty)
-      }, 0);
-      // console.log(tprice)
-      // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
     setSubTotal(tprice);
   };
+  
   let apidata = async () => {
     await axios.get(`http://localhost:8010/users/${id}`).then((res) => {
      try {
-      let dummy = dispatch(addUserProduct(res.data.product))
-      test(res.data.product,dummy.cartproducts);
-      setAllData(res.data.product)
-      // console.log(check.cartproducts)
+      dispatch(addUserProduct(res.data.product))
+      setUser(res.data)
+      test(res.data.product);
+      // setPro(res.data)
      } catch (error) {
       console.log(error)
      }
     });
   };
-  let tprice = selectdata.reduce((acc, curr) => {
-    // console.log(selectdata)
-    return acc + curr.price * curr.qty;
-    // console.log(curr.qty)
-  }, 0);
+  let tprice = selectdata.reduce((acc, curr) =>acc + curr.price * curr.qty, 0)
   let getdata = () => {
     try {
-      // console.log(selectdata)
       apidata();
     } catch (error) {
       alert("data not found");
@@ -65,9 +53,11 @@ const Cart = () => {
       setCartCheck(false);
     }
   };
-// console.log(selectdata)
+  const deletedata =async(data)=>{
+    let pr = pro.filter((item)=>item._id!==data._id)
+    axios.patch(`http://localhost:8010/users/${id}`,{product:pr}).then(()=>apidata())
+  }
   useEffect(() => {
-    // getdata();
     apidata();
   }, []);
   return (
@@ -94,6 +84,7 @@ const Cart = () => {
                       index={i}
                       setSubTotal={setSubTotal}
                       subTotal={subTotal}
+                      deletedata={deletedata}
                     />
                   </div>
                 );
@@ -113,7 +104,6 @@ const Cart = () => {
                 <h2>shipping : ${shipping}</h2>
                 <hr />
                 <h2>total : ${Math.round(tprice) + shipping}</h2>
-                {/* <Total/> */}
               </div>
             </div>
           </div>
