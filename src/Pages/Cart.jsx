@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CartProducts from "./CartProducts";
 import Header from "../Components/Header";
 import { addUserProduct } from "../Redux/Action";
+import Total from "./Total";
 
 const Cart = () => {
   let [pro, setPro] = useState([]);
@@ -12,30 +13,44 @@ const Cart = () => {
   let [cartItem, setCartItem] = useState();
   let [subTotal, setSubTotal] = useState(0);
   let [shipping, setShipping] = useState(5);
+  let [allData,setAllData] = useState([])
 
   let selectdata = useSelector((store) => store.cartProducts);
-  let dispatch = useDispatch([]);
+  let dispatch = useDispatch();
   let nav = useNavigate();
   let id = JSON.parse(localStorage.getItem("id"));
 
-  const test = (data) => {
+  const test = (data,mydata) => {
     cartData(data);
-    let tprice = data.reduce((acc, curr) => {
-      return acc + curr.price * curr.qty;
-    }, 0);
-    // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
+    // console.log(mydata)
+    let tprice = mydata.reduce((acc, curr) => {
+        return acc + curr.price * curr.qty;
+        // console.log(curr.qty)
+      }, 0);
+      // console.log(tprice)
+      // let tprice = res.data.product.reduce((acc, curr) => acc + curr.price * curr.qty,0);
     setSubTotal(tprice);
   };
   let apidata = async () => {
     await axios.get(`http://localhost:8010/users/${id}`).then((res) => {
-      dispatch(addUserProduct(res.data.product))
-      test(res.data.product);
+     try {
+      let dummy = dispatch(addUserProduct(res.data.product))
+      test(res.data.product,dummy.cartproducts);
+      setAllData(res.data.product)
       // console.log(check.cartproducts)
+     } catch (error) {
+      console.log(error)
+     }
     });
   };
-console.log(selectdata)
+  let tprice = selectdata.reduce((acc, curr) => {
+    // console.log(selectdata)
+    return acc + curr.price * curr.qty;
+    // console.log(curr.qty)
+  }, 0);
   let getdata = () => {
     try {
+      // console.log(selectdata)
       apidata();
     } catch (error) {
       alert("data not found");
@@ -50,9 +65,9 @@ console.log(selectdata)
       setCartCheck(false);
     }
   };
-
+// console.log(selectdata)
   useEffect(() => {
-    getdata();
+    // getdata();
     apidata();
   }, []);
   return (
@@ -70,7 +85,7 @@ console.log(selectdata)
               <p>product detail</p>
             </div>
             <div className="cart">
-              {pro.map((ele, i) => {
+              {selectdata.map((ele, i) => {
                 return (
                   <div key={i}>
                     <CartProducts
@@ -94,10 +109,11 @@ console.log(selectdata)
                 </button>
               </div>
               <div>
-                <h2>sub total : ${Math.round(subTotal)}</h2>
+                <h2>sub total : ${Math.round(tprice)}</h2>
                 <h2>shipping : ${shipping}</h2>
                 <hr />
-                <h2>total : ${Math.round(subTotal) + shipping}</h2>
+                <h2>total : ${Math.round(tprice) + shipping}</h2>
+                {/* <Total/> */}
               </div>
             </div>
           </div>

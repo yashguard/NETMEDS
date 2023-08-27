@@ -4,6 +4,7 @@ import {
   add_Products,
   add_Sort,
   add_user_product,
+  edit_user_product,
 } from "./ActionType";
 
 let initialState = {
@@ -36,7 +37,24 @@ export const reducer = (state = initialState, action) => {
         cartProducts: [...action.cartproducts],
       };
 
-    case add_Products:
+    case edit_user_product:
+      const updatedCartProducts = state.cartProducts.map((item) => {
+        if (item._id === action.cartproduct._id) {
+          return {
+            ...item,
+            qty: action.e,
+          };
+        }
+        return item;
+      });
+      console.log(updatedCartProducts)
+
+      return {
+        ...state,
+        cartProducts: updatedCartProducts,
+      };
+
+      case add_Products:
       return {
         ...state,
         products: [...action.products],
